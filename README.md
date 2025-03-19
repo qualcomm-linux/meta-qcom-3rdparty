@@ -7,18 +7,22 @@ platforms.
 
 This layers provides additional recipes and machine configuration files for
 Third-Party Maintained Qualcomm platforms. Reference boards that are officially
-supported by Qualcomm are available via ``meta-qcom`` instead.
+supported by Qualcomm are available via ``meta-qcom`` / ``meta-qcom-hwe`` instead.
 
 This layer depends on:
 
 ```
 URI: https://github.com/openembedded/openembedded-core.git
 layers: meta
-branch: master
+branch: scarthgap
 revision: HEAD
 
 URI: https://github.com/qualcomm-linux/meta-qcom.git
-branch: master
+branch: scarthgap
+revision: HEAD
+
+URI: https://github.com/qualcomm-linux/meta-qcom-hwe.git
+branch: scarthgap
 revision: HEAD
 
 ```
