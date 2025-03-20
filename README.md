@@ -28,6 +28,7 @@ revision: HEAD
 - **main:** Primary development branch, with focus on upstream support and
   compatibility with the most recent Yocto Project release.
 - **scarthgap:** Qualcomm Linux >= 1.4, aligned with Yocto Project 5.0 (LTS).
+- **kirkstone:** Qualcomm Linux <= 1.3, aligned with Yocto Project 4.0 (LTS).
 
 ## Machine Support
 
