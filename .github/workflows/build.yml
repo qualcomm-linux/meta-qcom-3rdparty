@@ -1,0 +1,60 @@
+name: Build Qualcomm Linux
+
+on:
+  workflow_call:
+
+env:
+  CACHE_DIR: /srv/gh-runners/quic-yocto/3rdparty
+  BASE_ARTIFACT_URL: "https://quic-yocto-fileserver-1029608027416.us-central1.run.app/${{ github.run_id }}"
+  MANIFEST_URL: https://github.com/quic-yocto/qcom-manifest
+  MANIFEST_BRANCH: qcom-linux-kirkstone
+  QLI_VERSION: QLI.1.3
+
+jobs:
+  build:
+    if: github.repository == 'qualcomm-linux/meta-qcom-3rdparty'
+    strategy:
+      fail-fast: true
+      matrix:
+        machine:
+          - qcs6490-rb3gen2-core-kit
+          - qcs6490-rb3gen2-vision-kit
+          - qcs9075-ride-sx
+          - qcs9075-rb8-core-kit
+          - qcs9100-ride-sx
+          - qcs8300-ride-sx
+        bsp:
+          - custom
+        include:
+          - machine: qcs9100-ride-sx
+            bsp: base
+          - machine: qcs8300-ride-sx
+            bsp: base
+    runs-on: [self-hosted, x86]
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Get manifest file
+        run: |
+          git clone --depth=1 ${MANIFEST_URL} -b ${MANIFEST_BRANCH}
+          cd qcom-manifest
+          MANIFEST_FILE=$(ls *${QLI_VERSION}*.xml | sort | grep -v -e realtime-linux -e qim-product-sdk -e robotics-product-sdk | tail -1)
+          echo "Manifest file: ${MANIFEST_FILE}"
+          echo "MANIFEST_FILE=${MANIFEST_FILE}" >> "$GITHUB_ENV"
+
+      - name: Setup workspace
+        run: |
+          mkdir QLI
+          cd QLI
+          repo init -u ${MANIFEST_URL} -b ${MANIFEST_BRANCH} -m ${MANIFEST_FILE}
+          repo sync
+          mkdir -p ${CACHE_DIR}/{downloads,sstate-cache}
+          ln -s ${CACHE_DIR}/downloads
+          ln -s ${CACHE_DIR}/sstate-cache
+
+      - name: Build QLI
+        run: |
+          cd QLI
+          MACHINE=${{ matrix.machine }} DISTRO=qcom-wayland QCOM_SELECTED_BSP=${{ matrix.bsp }} source setup-environment
+          bitbake-layers add-layer $GITHUB_WORKSPACE
+          bitbake qcom-console-image
