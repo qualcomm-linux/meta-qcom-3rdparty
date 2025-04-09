@@ -55,6 +55,9 @@ jobs:
       - name: Build QLI
         run: |
           cd QLI
+          # FIXME: apply_poky_patches() fails in setup-environment and it's not
+          # needed, so skip it for now, until it's fixed properly.
+          sed -i '/    apply_poky_patches/d' setup-environment
           MACHINE=${{ matrix.machine }} DISTRO=qcom-wayland QCOM_SELECTED_BSP=${{ matrix.bsp }} source setup-environment
           bitbake-layers add-layer $GITHUB_WORKSPACE
           bitbake qcom-console-image
