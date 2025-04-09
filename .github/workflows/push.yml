@@ -1,0 +1,10 @@
+name: Build on push
+
+on:
+  push:
+    branches:
+      - kirkstone
+
+jobs:
+  build:
+    uses: ./.github/workflows/build.yml
