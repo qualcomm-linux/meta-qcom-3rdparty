@@ -29,7 +29,7 @@ jobs:
             bsp: base
           - machine: qcs8300-ride-sx
             bsp: base
-    runs-on: [self-hosted, qcom-u2404, amd64-dev]
+    runs-on: [self-hosted, qcom-u2404, amd64-ssd]
     container:
       image: debian:trixie
       volumes:
