@@ -39,9 +39,15 @@ jobs:
       - name: Update OS packages
         run: |
           set -ux
+          sed -i 's/Components: main/Components: main contrib/' /etc/apt/sources.list.d/debian.sources
           apt update
           apt -y upgrade
           apt -y full-upgrade
+          apt-get install --no-install-recommends -y \
+            gawk wget git diffstat unzip texinfo \
+            gcc build-essential chrpath socat cpio python3 python3-pip python3-pexpect \
+            xz-utils debianutils iputils-ping python3-git python3-jinja2 libegl1-mesa \
+            pylint xterm python3-subunit mesa-common-dev zstd liblz4-tool repo
 
       - uses: actions/checkout@v4
         with:
@@ -57,9 +63,6 @@ jobs:
 
       - name: Setup workspace
         run: |
-          # install repo
-          sudo sed -i 's/Components: main/Components: main contrib/' /etc/apt/sources.list.d/debian.sources
-          sudo apt update && sudo apt install repo
           mkdir QLI
           cd QLI
           repo init -u ${MANIFEST_URL} -b ${MANIFEST_BRANCH} -m ${MANIFEST_FILE}
