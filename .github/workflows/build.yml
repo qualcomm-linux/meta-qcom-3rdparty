@@ -70,10 +70,14 @@ jobs:
           mkdir -p /cache/{downloads,sstate-cache}
           ln -s /cache/downloads
           ln -s /cache/sstate-cache
+          pwd
+          ls -l
 
       - name: Build QLI
         run: |
           cd QLI
+          pwd
+          ls -l
           # FIXME: apply_poky_patches() fails in setup-environment and it's not
           # needed, so skip it for now, until it's fixed properly.
           sed -i '/    apply_poky_patches/d' setup-environment
