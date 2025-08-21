@@ -72,6 +72,7 @@ jobs:
           ln -s /cache/sstate-cache
 
       - name: Build QLI
+        shell: bash
         run: |
           cd QLI
           # FIXME: apply_poky_patches() fails in setup-environment and it's not
