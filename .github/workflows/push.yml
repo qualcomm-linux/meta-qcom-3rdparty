@@ -3,7 +3,7 @@ name: Build on push
 on:
   push:
     branches:
-      - kirkstone
+      - scarthgap
 
 jobs:
   build:
