@@ -4,7 +4,6 @@ on:
   workflow_call:
 
 env:
-  CACHE_DIR: /srv/gh-runners/quic-yocto/3rdparty
   BASE_ARTIFACT_URL: "https://quic-yocto-fileserver-1029608027416.us-central1.run.app/${{ github.run_id }}"
   MANIFEST_URL: https://github.com/quic-yocto/qcom-manifest
   MANIFEST_BRANCH: qcom-linux-scarthgap
@@ -30,9 +29,22 @@ jobs:
             bsp: base
           - machine: qcs8300-ride-sx
             bsp: base
-    runs-on: [self-hosted, x86]
+    runs-on: [self-hosted, qcom-u2404, amd64-ssd]
+    container:
+      image: ghcr.io/siemens/kas/kas
+      volumes:
+        - /efs/qli/meta-qcom-3rdparty:/cache
     steps:
+      - name: Update OS packages
+        run: |
+          set -ux
+          sudo sed -i 's/Components: main/Components: main contrib/' /etc/apt/sources.list.d/debian.sources
+          sudo apt update
+          sudo apt install --no-install-recommends -y repo
+
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
       - name: Get manifest file
         run: |
@@ -48,11 +60,12 @@ jobs:
           cd QLI
           repo init -u ${MANIFEST_URL} -b ${MANIFEST_BRANCH} -m ${MANIFEST_FILE}
           repo sync
-          mkdir -p ${CACHE_DIR}/{downloads,sstate-cache}
-          ln -s ${CACHE_DIR}/downloads
-          ln -s ${CACHE_DIR}/sstate-cache
+          mkdir -p /cache/{downloads,sstate-cache}
+          ln -s /cache/downloads
+          ln -s /cache/sstate-cache
 
       - name: Build QLI
+        shell: bash
         run: |
           cd QLI
           # FIXME: apply_poky_patches() fails in setup-environment and it's not
