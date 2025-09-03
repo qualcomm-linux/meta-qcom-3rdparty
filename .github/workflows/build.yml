@@ -11,7 +11,32 @@ env:
   QLI_VERSION: QLI.1.4
 
 jobs:
+  build_warmup:
+    if: github.repository == 'qualcomm-linux/meta-qcom-3rdparty'
+    runs-on: [self-hosted, x86]
+    strategy:
+      fail-fast: true
+      matrix:
+        machine:
+          - qcs8300-ride-sx
+        bsp:
+          - custom
+          - base
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Run build
+        uses: ./.github/actions/compile
+        with:
+          machine: ${{matrix.machine}}
+          bsp: ${{matrix.bsp}}
+          cache_dir: ${CACHE_DIR}
+          manifest_url: ${MANIFEST_URL}
+          manifest_branch: ${MANIFEST_BRANCH}
+          qli_version: ${QLI_VERSION}
+
   build:
+    needs: build_warmup
     if: github.repository == 'qualcomm-linux/meta-qcom-3rdparty'
     runs-on: [self-hosted, x86]
     strategy:
@@ -23,13 +48,10 @@ jobs:
           - qcs9075-ride-sx
           - qcs9075-rb8-core-kit
           - qcs9100-ride-sx
-          - qcs8300-ride-sx
         bsp:
           - custom
         include:
           - machine: qcs9100-ride-sx
-            bsp: base
-          - machine: qcs8300-ride-sx
             bsp: base
     steps:
       - uses: actions/checkout@v4
