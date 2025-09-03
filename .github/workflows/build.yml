@@ -13,6 +13,7 @@ env:
 jobs:
   build:
     if: github.repository == 'qualcomm-linux/meta-qcom-3rdparty'
+    runs-on: [self-hosted, x86]
     strategy:
       fail-fast: true
       matrix:
@@ -30,7 +31,6 @@ jobs:
             bsp: base
           - machine: qcs8300-ride-sx
             bsp: base
-    runs-on: [self-hosted, x86]
     steps:
       - uses: actions/checkout@v4
 
