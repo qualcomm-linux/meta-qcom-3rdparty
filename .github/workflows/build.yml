@@ -45,8 +45,8 @@ jobs:
         machine:
           - qcs6490-rb3gen2-core-kit
           - qcs6490-rb3gen2-vision-kit
-          - qcs9075-ride-sx
           - qcs9075-rb8-core-kit
+          - qcs9075-ride-sx
           - qcs9100-ride-sx
         bsp:
           - custom
