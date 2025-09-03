@@ -1,0 +1,47 @@
+name: Run a specific build configuration
+inputs:
+  machine:
+    required: true
+  bsp:
+    required: true
+  cache_dir:
+    required: true
+  manifest_url:
+    required: true
+  manifest_branch:
+    required: true
+  qli_version:
+    required: true
+runs:
+  using: "composite"
+  steps:
+    - name: Get manifest file
+      shell: bash
+      run: |
+        git clone --depth=1 ${{inputs.manifest_url}} -b ${{inputs.manifest_branch}}
+        cd qcom-manifest
+        MANIFEST_FILE=$(ls *${{inputs.qli_version}}*.xml | sort | grep -v -e realtime-linux -e qim-product-sdk -e robotics-product-sdk | tail -1)
+        echo "Manifest file: ${MANIFEST_FILE}"
+        echo "MANIFEST_FILE=${MANIFEST_FILE}" >> "$GITHUB_ENV"
+
+    - name: Setup workspace
+      shell: bash
+      run: |
+        mkdir QLI
+        cd QLI
+        repo init -u ${{inputs.manifest_url}} -b ${{inputs.manifest_branch}} -m ${MANIFEST_FILE}
+        repo sync
+        mkdir -p ${{inputs.cache_dir}}/{downloads,sstate-cache}
+        ln -s ${{inputs.cache_dir}}/downloads
+        ln -s ${{inputs.cache_dir}}/sstate-cache
+
+    - name: Build QLI
+      shell: bash
+      run: |
+        cd QLI
+        # FIXME: apply_poky_patches() fails in setup-environment and it's not
+        # needed, so skip it for now, until it's fixed properly.
+        sed -i '/    apply_poky_patches/d' setup-environment
+        MACHINE=${{ inputs.machine }} DISTRO=qcom-wayland QCOM_SELECTED_BSP=${{ inputs.bsp }} source setup-environment
+        bitbake-layers add-layer $GITHUB_WORKSPACE
+        bitbake qcom-console-image
