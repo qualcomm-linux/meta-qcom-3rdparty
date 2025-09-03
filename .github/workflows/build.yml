@@ -11,8 +11,34 @@ env:
   QLI_VERSION: QLI.1.4
 
 jobs:
-  build:
+  build_warmup:
     if: github.repository == 'qualcomm-linux/meta-qcom-3rdparty'
+    runs-on: [self-hosted, x86]
+    strategy:
+      fail-fast: true
+      matrix:
+        machine:
+          - qcs8300-ride-sx
+        bsp:
+          - custom
+          - base
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Run build
+        uses: ./.github/actions/compile
+        with:
+          machine: ${{matrix.machine}}
+          bsp: ${{matrix.bsp}}
+          cache_dir: ${CACHE_DIR}
+          manifest_url: ${MANIFEST_URL}
+          manifest_branch: ${MANIFEST_BRANCH}
+          qli_version: ${QLI_VERSION}
+
+  build:
+    needs: build_warmup
+    if: github.repository == 'qualcomm-linux/meta-qcom-3rdparty'
+    runs-on: [self-hosted, x86]
     strategy:
       fail-fast: true
       matrix:
@@ -22,42 +48,20 @@ jobs:
           - qcs9075-ride-sx
           - qcs9075-rb8-core-kit
           - qcs9100-ride-sx
-          - qcs8300-ride-sx
         bsp:
           - custom
         include:
           - machine: qcs9100-ride-sx
             bsp: base
-          - machine: qcs8300-ride-sx
-            bsp: base
-    runs-on: [self-hosted, x86]
     steps:
       - uses: actions/checkout@v4
 
-      - name: Get manifest file
-        run: |
-          git clone --depth=1 ${MANIFEST_URL} -b ${MANIFEST_BRANCH}
-          cd qcom-manifest
-          MANIFEST_FILE=$(ls *${QLI_VERSION}*.xml | sort | grep -v -e realtime-linux -e qim-product-sdk -e robotics-product-sdk | tail -1)
-          echo "Manifest file: ${MANIFEST_FILE}"
-          echo "MANIFEST_FILE=${MANIFEST_FILE}" >> "$GITHUB_ENV"
-
-      - name: Setup workspace
-        run: |
-          mkdir QLI
-          cd QLI
-          repo init -u ${MANIFEST_URL} -b ${MANIFEST_BRANCH} -m ${MANIFEST_FILE}
-          repo sync
-          mkdir -p ${CACHE_DIR}/{downloads,sstate-cache}
-          ln -s ${CACHE_DIR}/downloads
-          ln -s ${CACHE_DIR}/sstate-cache
-
-      - name: Build QLI
-        run: |
-          cd QLI
-          # FIXME: apply_poky_patches() fails in setup-environment and it's not
-          # needed, so skip it for now, until it's fixed properly.
-          sed -i '/    apply_poky_patches/d' setup-environment
-          MACHINE=${{ matrix.machine }} DISTRO=qcom-wayland QCOM_SELECTED_BSP=${{ matrix.bsp }} source setup-environment
-          bitbake-layers add-layer $GITHUB_WORKSPACE
-          bitbake qcom-console-image
+      - name: Run build
+        uses: ./.github/actions/compile
+        with:
+          machine: ${{matrix.machine}}
+          bsp: ${{matrix.bsp}}
+          cache_dir: ${CACHE_DIR}
+          manifest_url: ${MANIFEST_URL}
+          manifest_branch: ${MANIFEST_BRANCH}
+          qli_version: ${QLI_VERSION}
