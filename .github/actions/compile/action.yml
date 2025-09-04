@@ -4,8 +4,6 @@ inputs:
     required: true
   bsp:
     required: true
-  cache_dir:
-    required: true
   manifest_url:
     required: true
   manifest_branch:
@@ -15,6 +13,14 @@ inputs:
 runs:
   using: "composite"
   steps:
+    - name: Update OS packages
+      shell: bash
+      run: |
+        set -ux
+        sudo sed -i 's/Components: main/Components: main contrib/' /etc/apt/sources.list.d/debian.sources
+        sudo apt update
+        sudo apt install repo
+
     - name: Get manifest file
       shell: bash
       run: |
@@ -31,9 +37,9 @@ runs:
         cd QLI
         repo init -u ${{inputs.manifest_url}} -b ${{inputs.manifest_branch}} -m ${MANIFEST_FILE}
         repo sync
-        mkdir -p ${{inputs.cache_dir}}/{downloads,sstate-cache}
-        ln -s ${{inputs.cache_dir}}/downloads
-        ln -s ${{inputs.cache_dir}}/sstate-cache
+        mkdir -p /cache/{downloads,sstate-cache}
+        ln -s /cache/downloads
+        ln -s /cache/sstate-cache
 
     - name: Build QLI
       shell: bash
