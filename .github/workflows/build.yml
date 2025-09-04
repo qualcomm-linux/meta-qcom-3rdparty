@@ -22,7 +22,7 @@ jobs:
           - custom
           - base
     container:
-      image: debian:trixie
+      image: ghcr.io/siemens/kas/kas
       volumes:
         - /efs/qli/meta-qcom-3rdparty:/cache
       options: --privileged

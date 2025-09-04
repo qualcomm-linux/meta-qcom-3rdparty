@@ -17,15 +17,9 @@ runs:
       shell: bash
       run: |
         set -ux
-        sed -i 's/Components: main/Components: main contrib/' /etc/apt/sources.list.d/debian.sources
-        apt update
-        apt -y upgrade
-        apt -y full-upgrade
-        apt-get install --no-install-recommends -y \
-        build-essential chrpath cpio debianutils diffstat file gawk \
-        gcc git iputils-ping libacl1 locales python3 python3-git \
-        python3-jinja2 python3-pexpect python3-pip python3-subunit \
-        socat texinfo unzip wget xz-utils zstd repo ssh
+        sudo sed -i 's/Components: main/Components: main contrib/' /etc/apt/sources.list.d/debian.sources
+        sudo apt update
+        sudo apt install repo
 
     - name: Get manifest file
       shell: bash
