@@ -27,7 +27,7 @@ jobs:
         - /efs/qli/meta-qcom-3rdparty:/cache
       options: --privileged
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
 
       - name: Run build
         uses: ./.github/actions/compile
