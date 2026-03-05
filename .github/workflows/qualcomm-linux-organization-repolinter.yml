@@ -2,9 +2,9 @@ name: Qualcomm Linux Organization Repolinter
 
 on:
   push:
-    branches: [ "main" ]
+    branches: [ "next" ]
   pull_request:
-    branches: [ "main" ]
+    branches: [ "next" ]
 
 jobs:
   repolinter:

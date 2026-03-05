@@ -2,9 +2,9 @@ name: QuIC Organization Repolinter
 
 on:
   push:
-    branches: [ main ]
+    branches: [ next ]
   pull_request:
-    branches: [ main ]
+    branches: [ next ]
   workflow_dispatch:
 
 jobs:
