@@ -17,28 +17,12 @@ jobs:
     strategy:
       matrix:
         machine:
-          - iq-8275-evk
-          - iq-9075-evk
-          - iq-x7181-evk
-          - qcm6490-idp
-          - qcs615-ride
-          - rb3gen2-core-kit
-          - qcs8300-ride-sx
-          - qcs9100-ride-sx
-          - qcom-armv8a
-          - qcom-armv7a
-          - rb1-core-kit
+          - uno-q
         distro:
           - name: poky-altcfg
           - name: qcom-distro
         kernel:
           - ""
-          - _linux-qcom-6.18
-        exclude:
-          - distro: poky-altcfg
-            kernel: _linux-qcom-6.18
-          - machine: qcom-armv7a
-            kernel: _linux-qcom-6.18
     steps:
       - uses: actions/checkout@v4
         with:
@@ -142,21 +126,12 @@ jobs:
         # only run pre-merge tests on devices available in the LAB
         # and "contemporary" - exclude dragonboards
         machine:
-          - iq-9075-evk
-          - qcs615-ride
-          - rb3gen2-core-kit
-          - qcs8300-ride-sx
-          - qcs9100-ride-sx
-          - rb1-core-kit
+          - uno-q
         distro:
           - name: poky-altcfg
           - name: qcom-distro
         kernel:
           - ""
-          - _linux-qcom-6.18
-        exclude:
-          - distro: poky-altcfg
-            kernel: _linux-qcom-6.18
     steps:
       - id: print-condition
         name: "Print condition"
