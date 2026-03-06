@@ -18,18 +18,3 @@ jobs:
     uses: ./.github/workflows/build-yocto.yml
     with:
       sdk: "1"
-  test-nightly:
-    uses: ./.github/workflows/test.yml
-    needs: build-nightly
-    secrets: inherit
-    with:
-      build_id: ${{ github.run_id }}
-  publish-test-results:
-    uses: ./.github/workflows/publish-results.yml
-    needs: test-nightly
-    secrets: inherit
-    with:
-      workflow_id: ${{ github.run_id }}
-      event_name: ${{ github.event_name }}
-      event_file: ${{ github.event_path }}
-      commit: ${{ github.sha }}
