@@ -96,6 +96,7 @@ jobs:
       matrix:
         machine:
           - uno-q
+          - ventuno-q
         distro:
           - name: poky-altcfg
             yamlfile: ""
