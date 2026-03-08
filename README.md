@@ -1,5 +1,8 @@
 # meta-qcom-3rdparty
 
+[![Build on push](https://img.shields.io/github/actions/workflow/status/qualcomm-linux/meta-qcom-3rdparty/push.yml?label=Build%20on%20push)](https://github.com/qualcomm-linux/meta-qcom-3rdparty/actions/workflows/push.yml)
+[![Nightly Build](https://img.shields.io/github/actions/workflow/status/qualcomm-linux/meta-qcom-3rdparty/nightly-build.yml?label=Nightly%20Build)](https://github.com/qualcomm-linux/meta-qcom-3rdparty/actions/workflows/nightly-build.yml)
+
 ## Introduction
 
 OpenEmbedded/Yocto Project BSP layer for Third-Party Maintained Qualcomm based
