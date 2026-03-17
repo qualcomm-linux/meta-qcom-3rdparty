@@ -138,6 +138,7 @@ jobs:
 
   publish_summary:
     needs: compile
+    if: ${{ always() && github.repository_owner == 'qualcomm-linux' }}
     runs-on: [self-hosted, qcom-u2404, amd64]
     steps:
       - name: 'Download build URLs'
