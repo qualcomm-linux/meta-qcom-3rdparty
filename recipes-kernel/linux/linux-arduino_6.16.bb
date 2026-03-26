@@ -16,6 +16,7 @@ SRCBRANCH ?= "nobranch=1"
 
 SRC_URI = "\
     git://github.com/arduino/linux-qcom.git;${SRCBRANCH};protocol=https \
+    file://0001-libbpf-Fix-Wdiscarded-qualifiers-under-C23.patch \
     file://configs/arduino.cfg \
 "
 
