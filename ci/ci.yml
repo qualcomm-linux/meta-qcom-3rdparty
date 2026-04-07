@@ -5,4 +5,4 @@ header:
   includes:
     - ci/meta-qcom.yml
     - repo: meta-qcom
-      file: ci/mirror.yml
+      file: ci/ci.yml
