@@ -97,7 +97,7 @@ jobs:
         machine:
           - uno-q
         distro:
-          - name: poky-altcfg
+          - name: nodistro
             yamlfile: ""
           - name: qcom-distro
             yamlfile: ':ci/qcom-distro.yml'
