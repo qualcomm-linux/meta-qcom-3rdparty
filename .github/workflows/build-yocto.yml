@@ -105,15 +105,6 @@ jobs:
           - type: default
             dirname: ""
             yamlfile: ""
-        include:
-          - machine: uno-q
-            distro:
-                name: qcom-distro
-                yamlfile: ':ci/qcom-distro.yml'
-            kernel:
-                type: qcom-next
-                dirname: "_linux-qcom-next"
-                yamlfile: ":ci/linux-qcom-next.yml"
     name: ${{ matrix.machine }}/${{ matrix.distro.name }}${{ matrix.kernel.dirname }}
     steps:
       - uses: actions/checkout@v4
