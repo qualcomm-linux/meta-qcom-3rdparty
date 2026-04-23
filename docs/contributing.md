@@ -67,7 +67,7 @@ Reference: [Understanding bbappends](https://docs.yoctoproject.org/ref-manual/te
 - Avoid distribution-specific logic — vendors may ship separate distro layers.
 
 Preferred test distros:
-- [`poky-altcfg`](https://git.yoctoproject.org/poky/tree/meta-poky/conf/distro/poky-altcfg.conf) (systemd-compatible)
+- `nodistro` (systemd-compatible)
 - [`meta-qcom-distro`](https://github.com/qualcomm-linux/meta-qcom-distro)
 
 ### 2.6  Maintainer Expectations
