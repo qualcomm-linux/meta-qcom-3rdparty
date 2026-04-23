@@ -144,19 +144,154 @@ Preferred test distros:
 
 ## 6  Machine Example – Arduino Uno-Q
 
-*TODO*
+The [Arduino UNO Q](https://www.arduino.cc/product-uno-q) (QRB2210 / QCM2290 SoC) is the reference example for how a new board is integrated in this layer.
+The following subsections walk through each required component.
 
-The `Arduino Uno-Q` board serves as an example of a machine integration inside this layer.
+### 6.1  Machine Configuration
 
-Typical components include:
-- `conf/machine/arduino-unoq.conf`
-- Board-specific packagegroup under `recipes-bsp/packagegroups/`
-- Firmware recipes referencing vendor-hosted binaries
-- Partition configuration defined through `qcom-ptool`
-- Kernel support via `linux-qcom-next` `.bbappend`
-- CI job validating `core-image-base` build and boot on target
+File: `conf/machine/uno-q.conf`
 
-This structure should be mirrored by any new vendor machine added to the layer.
+Every machine must have a configuration file under `conf/machine/`.
+Key elements to include:
+
+- **SoC include** — pull in the common SoC baseline from `meta-qcom`:
+  ```bitbake
+  require conf/machine/include/qcom-qcm2290.inc
+  ```
+- **Vendor override** — prepend a vendor-scoped override so that vendor-specific
+  appends can use it without affecting other machines:
+  ```bitbake
+  MACHINEOVERRIDES =. "arduino:"
+  ```
+- **Kernel provider** — point to the board-specific kernel recipe:
+  ```bitbake
+  PREFERRED_PROVIDER_virtual/kernel ?= "linux-arduino"
+  ```
+- **Device tree** — declare the DTB name(s) used at build and boot time:
+  ```bitbake
+  QCOM_DTB_DEFAULT ?= "qrb2210-arduino-imola"
+  KERNEL_DEVICETREE ?= "qcom/qrb2210-arduino-imola.dtb"
+  ```
+- **Machine features** — list hardware capabilities:
+  ```bitbake
+  MACHINE_FEATURES = "efi usbhost usbgadget alsa wifi bluetooth"
+  ```
+- **Packagegroups** — pull in board firmware and DSP binaries at image level:
+  ```bitbake
+  MACHINE_ESSENTIAL_EXTRA_RRECOMMENDS += " \
+      packagegroup-uno-q-firmware \
+      packagegroup-uno-q-hexagon-dsp-binaries \
+  "
+  ```
+- **Boot and partition paths** — align with the layout expected by `qcom-common`
+  image helpers:
+  ```bitbake
+  QCOM_BOOT_FILES_SUBDIR = "qrb2210-arduino-imola"
+  QCOM_PARTITION_FILES_SUBDIR ?= "partitions/qrb2210-unoq/emmc-16GB"
+  QCOM_BOOT_FIRMWARE = "firmware-qcom-boot-qrb2210-arduino-imola"
+  ```
+
+### 6.2  Packagegroup
+
+File: `recipes-bsp/packagegroups/packagegroup-uno-q.bb`
+
+Create a machine-specific packagegroup that groups firmware and Hexagon DSP
+binaries into separate sub-packages.
+Conditional inclusion based on `DISTRO_FEATURES` avoids pulling in unnecessary
+blobs:
+
+```bitbake
+PACKAGES = "${PN}-firmware ${PN}-hexagon-dsp-binaries"
+
+RRECOMMENDS:${PN}-firmware = " \
+    ${@bb.utils.contains_any('DISTRO_FEATURES', 'opencl opengl vulkan', \
+        'linux-firmware-qcom-adreno-a702', '', d)} \
+    ${@bb.utils.contains('DISTRO_FEATURES', 'wifi', \
+        'linux-firmware-ath10k-wcn3990', '', d)} \
+    linux-firmware-qcom-qcm2290-audio \
+"
+RDEPENDS:${PN}-hexagon-dsp-binaries = "hexagon-dsp-binaries-thundercomm-rb1-adsp"
+```
+
+### 6.3  Kernel Recipe
+
+File: `recipes-kernel/linux/linux-arduino_6.16.bb`
+
+When the board requires a kernel tree or revision different from `linux-qcom-next`,
+provide a dedicated recipe.
+Always restrict its applicability with `COMPATIBLE_MACHINE`:
+
+```bitbake
+COMPATIBLE_MACHINE = "(uno-q)"
+SRC_URI = "git://github.com/arduino/linux-qcom.git;..."
+```
+
+Include a `configs/<board>.cfg` kernel fragment for any board-specific
+`Kconfig` options that must be enabled on top of the upstream `defconfig`.
+
+If the board can share the `linux-qcom-next` tree (e.g. for a secondary build
+variant), use a `.bbappend` with machine overrides instead of a new recipe:
+
+```bitbake
+# recipes-kernel/linux/linux-qcom-next_git.bbappend
+LINUX_VERSION:uno-q = "6.19+7.0-rc2"
+SRCREV:uno-q = "a656209cfb5a49f301c377aa8455a10f83a4a719"
+```
+
+### 6.4  Boot Firmware Recipe
+
+File: `recipes-bsp/firmware-boot/firmware-qcom-boot-qrb2210-arduino-imola_<version>.bb`
+
+Closed-source boot binaries must be hosted on a **public, no-login mirror**
+managed by the vendor (arduino.cc in this case) and fetched via `SRC_URI`.
+Never commit binaries to the repository:
+
+```bitbake
+COMPATIBLE_MACHINE = "(uno-q)"
+SRC_URI = "https://downloads.arduino.cc/debian-im/unoq-bootloader-emmc-linux-${PV}.zip"
+include recipes-bsp/firmware-boot/firmware-qcom-boot-common.inc
+```
+
+### 6.5  CI Integration
+
+File: `ci/uno-q.yml`
+
+Add a [kas](https://kas.readthedocs.io/en/latest/userguide.html) machine
+fragment that extends `ci/base.yml`:
+
+```yaml
+header:
+  version: 14
+  includes:
+  - ci/base.yml
+
+machine: uno-q
+```
+
+Then register the machine in the build matrix inside
+`.github/workflows/build-yocto.yml` so that every pull request triggers a
+`nodistro` build (and optionally a `qcom-distro` build) for the new board:
+
+```yaml
+matrix:
+  machine:
+    - uno-q
+```
+
+---
+
+### 6.6  Summary Checklist
+
+When adding a new board, ensure the following files are present:
+
+| File | Purpose |
+|---|---|
+| `conf/machine/<machine>.conf` | Machine definition |
+| `recipes-bsp/packagegroups/packagegroup-<machine>.bb` | Firmware + DSP packagegroup |
+| `recipes-bsp/firmware-boot/firmware-qcom-boot-<soc>-<board>_<ver>.bb` | Boot firmware recipe |
+| `recipes-kernel/linux/linux-<vendor>_<ver>.bb` (or `.bbappend`) | Kernel recipe or revision override |
+| `ci/<machine>.yml` | KAS machine fragment |
+| Entry in `.github/workflows/build-yocto.yml` matrix | CI build registration |
 
 ---
 
