@@ -100,6 +100,7 @@ jobs:
       matrix:
         machine:
           - uno-q
+          - radxa-dragon-q6a
         distro:
           - name: nodistro
             yamlfile: ""
