@@ -55,7 +55,7 @@ jobs:
         uses: actions/create-github-app-token@v3
         if: always()
         with:
-          app-id: 2291458
+          client-id: 2291458
           private-key: ${{ secrets.TEST_REPORTING_APP_TOKEN }}
 
       - name: Publish Test Results
