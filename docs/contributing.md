@@ -45,7 +45,7 @@ Because this layer expects to host multiple vendor platforms:
 
 - Use **machine overrides** (`:machine` or `:append:machine`) to confine board-specific logic.
 - Avoid cross-contamination between machines or with upstream `meta-qcom`.
-- Do not introduce SoC-generic behavior under a machine-specific path. Those SoC-generic behavior must be sent/upstreamed to `meta-qcom` instead.
+- Do not introduce SoC-generic behavior under a machine-specific path. Such SoC-generic behavior must be sent/upstreamed to `meta-qcom` instead.
 
 Reference: [BitBake Overrides](https://docs.yoctoproject.org/ref-manual/variables.html#var-OVERRIDES)
 
