@@ -3,9 +3,8 @@ name: Build on PR
 on:
   pull_request:
     paths-ignore:
-      - 'README.md'
-      - 'README'
-      - 'SECURITY.md'
+      - '**/*.md'
+      - '.github/.markdownlint.yaml'
 
 permissions:
   checks: write
