@@ -1,0 +1,15 @@
+# markdownlint configuration
+# https://github.com/DavidAnson/markdownlint
+
+# MD013 - Line length
+MD013: false
+
+# MD024 - Multiple headings with the same content
+MD024:
+  siblings_only: true
+
+# MD033 - Inline HTML
+MD033: false
+
+# MD041 - First line in a file should be a top-level heading
+MD041: true

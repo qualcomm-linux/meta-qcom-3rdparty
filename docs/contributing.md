@@ -9,13 +9,14 @@ It follows the same conventions used by the Yocto Project and OpenEmbedded upstr
 
 The `meta-qcom-3rdparty` layer provides a **common OpenEmbedded / Yocto BSP** foundation for third-party hardware platforms based on Qualcomm SoCs.
 
-**Goals**
+### Goals
 
 - **Common layer for non-Qualcomm EVKs:** consolidate enablement for boards not officially maintained by Qualcomm.
 - **Clean BSP implementation:** a shared source of truth that vendors can reuse without divergence.
 - **Extend the Qualcomm Linux ecosystem:** encourage community participation and long-term maintainability aligned with `meta-qcom`.
 
 References:
+
 - [Yocto Project Overview](https://docs.yoctoproject.org/overview-manual/yp-intro.html)
 - [OpenEmbedded Layer Index](https://layers.openembedded.org/layerindex/)
 
@@ -41,15 +42,17 @@ Our process mirrors the official Yocto Project contribution flow — see
 ### 2.2  Machine-Specific Isolation
 
 Because this layer expects to host multiple vendor platforms:
+
 - Use **machine overrides** (`:machine` or `:append:machine`) to confine board-specific logic.
 - Avoid cross-contamination between machines or with upstream `meta-qcom`.
-- Do not introduce SoC-generic behavior under a machine-specific path. Those SoC-generic behavior must be sent/upstreamed to `meta-qcom` instead.
+- Do not introduce SoC-generic behavior under a machine-specific path. Such SoC-generic behavior must be sent/upstreamed to `meta-qcom` instead.
 
 Reference: [BitBake Overrides](https://docs.yoctoproject.org/ref-manual/variables.html#var-OVERRIDES)
 
 ### 2.3  Repository Organization
 
 All vendor boards live together in a single layer:
+
 - **No branch or folder segregation per vendor.**
 - Maintain quality equivalent to `meta-qcom`.
 
@@ -67,6 +70,7 @@ Reference: [Understanding bbappends](https://docs.yoctoproject.org/ref-manual/te
 - Avoid distribution-specific logic — vendors may ship separate distro layers.
 
 Preferred test distros:
+
 - `nodistro` (systemd-compatible)
 - [`meta-qcom-distro`](https://github.com/qualcomm-linux/meta-qcom-distro)
 
@@ -155,36 +159,49 @@ Every machine must have a configuration file under `conf/machine/`.
 Key elements to include:
 
 - **SoC include** — pull in the common SoC baseline from `meta-qcom`:
+
   ```bitbake
   require conf/machine/include/qcom-qcm2290.inc
   ```
+
 - **Vendor override** — prepend a vendor-scoped override so that vendor-specific
   appends can use it without affecting other machines:
+
   ```bitbake
   MACHINEOVERRIDES =. "arduino:"
   ```
+
 - **Kernel provider** — point to the board-specific kernel recipe:
+
   ```bitbake
   PREFERRED_PROVIDER_virtual/kernel ?= "linux-arduino"
   ```
+
 - **Device tree** — declare the DTB name(s) used at build and boot time:
+
   ```bitbake
   QCOM_DTB_DEFAULT ?= "qrb2210-arduino-imola"
   KERNEL_DEVICETREE ?= "qcom/qrb2210-arduino-imola.dtb"
   ```
+
 - **Machine features** — list hardware capabilities:
+
   ```bitbake
   MACHINE_FEATURES = "efi usbhost usbgadget alsa wifi bluetooth"
   ```
+
 - **Packagegroups** — pull in board firmware and DSP binaries at image level:
+
   ```bitbake
   MACHINE_ESSENTIAL_EXTRA_RRECOMMENDS += " \
       packagegroup-uno-q-firmware \
       packagegroup-uno-q-hexagon-dsp-binaries \
   "
   ```
+
 - **Boot and partition paths** — align with the layout expected by `qcom-common`
   image helpers:
+
   ```bitbake
   QCOM_BOOT_FILES_SUBDIR = "qrb2210-arduino-imola"
   QCOM_PARTITION_FILES_SUBDIR ?= "partitions/qrb2210-unoq/emmc-16GB"
@@ -285,7 +302,7 @@ matrix:
 When adding a new board, ensure the following files are present:
 
 | File | Purpose |
-|---|---|
+| --- | --- |
 | `conf/machine/<machine>.conf` | Machine definition |
 | `recipes-bsp/packagegroups/packagegroup-<machine>.bb` | Firmware + DSP packagegroup |
 | `recipes-bsp/firmware-boot/firmware-qcom-boot-<soc>-<board>_<ver>.bb` | Boot firmware recipe |

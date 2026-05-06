@@ -8,13 +8,13 @@
 OpenEmbedded/Yocto Project BSP layer for Third-Party Maintained Qualcomm based
 platforms.
 
-This layers provides additional recipes and machine configuration files for
+This layer provides additional recipes and machine configuration files for
 Third-Party Maintained Qualcomm platforms. Reference boards that are officially
-supported by Qualcomm are available via ``meta-qcom`` instead.
+supported by Qualcomm are available via `meta-qcom` instead.
 
 This layer depends on:
 
-```
+```text
 URI: https://github.com/openembedded/openembedded-core.git
 layers: meta
 branch: master
@@ -23,7 +23,6 @@ revision: HEAD
 URI: https://github.com/qualcomm-linux/meta-qcom.git
 branch: master
 revision: HEAD
-
 ```
 
 ## Branches
@@ -55,10 +54,10 @@ Pull requests will be discussed within the GitHub pull-request infrastructure.
 
 ## Maintainer(s)
 
-* Ricardo Salveti <ricardo.salveti@oss.qualcomm.com>
-* Nicolas Dechesne <nicolas.dechesne@oss.qualcomm.com>
+- Ricardo Salveti <ricardo.salveti@oss.qualcomm.com>
+- Nicolas Dechesne <nicolas.dechesne@oss.qualcomm.com>
 
 ## License
 
 This layer is licensed under the MIT license. Check out [COPYING.MIT](COPYING.MIT)
-for more detais.
+for more details.

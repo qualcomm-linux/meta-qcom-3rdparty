@@ -17,5 +17,5 @@ affected, the recipe and its version, and any example code, if available.
 Branches maintained with security fixes
 ---------------------------------------
 
-See https://wiki.yoctoproject.org/wiki/Releases for the list of current
+See <https://wiki.yoctoproject.org/wiki/Releases> for the list of current
 releases. We only accept patches for the LTS releases and the main branch.
