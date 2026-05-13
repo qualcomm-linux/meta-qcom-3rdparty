@@ -162,6 +162,7 @@ jobs:
         machine:
           - uno-q
           - radxa-dragon-q6a
+          - rubikpi3
         distro:
           - name: nodistro
             yamlfile: ""
