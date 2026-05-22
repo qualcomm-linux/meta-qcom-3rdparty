@@ -52,7 +52,7 @@ jobs:
           fi
 
       - id: app_token
-        uses: actions/create-github-app-token@v2
+        uses: actions/create-github-app-token@v3
         if: always()
         with:
           app-id: 2291458
