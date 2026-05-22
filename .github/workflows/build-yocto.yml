@@ -2,15 +2,6 @@ name: Build Yocto
 
 on:
   workflow_call:
-    inputs:
-      sdk:
-        required: false
-        type: string
-        default: "0"
-    outputs:
-      artifacts_url:
-        description: "URL to retrieve build artifacts"
-        value: ${{ jobs.create-output.outputs.url }}
 
 # Concurrency is used to prevent multiple workflows from running for the same PR
 concurrency:
@@ -135,7 +126,6 @@ jobs:
           kernel_yaml: ${{matrix.kernel.yamlfile}}
           kernel_dirname: ${{matrix.kernel.dirname}}
           cache_dir: ${{env.CACHE_DIR}}
-          sdk: ${{inputs.sdk}}
 
   publish_summary:
     needs: compile
