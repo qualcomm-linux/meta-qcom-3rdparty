@@ -16,5 +16,3 @@ permissions:
 jobs:
   build-nightly:
     uses: ./.github/workflows/build-yocto.yml
-    with:
-      sdk: "1"
