@@ -7,16 +7,15 @@ inherit kernel cml1
 
 COMPATIBLE_MACHINE = "(uno-q)"
 
-LINUX_VERSION ?= "6.16.7"
+LINUX_VERSION ?= "7.0"
 
 PV = "${LINUX_VERSION}"
 
-SRCREV ?= "0dd6551ae96b78024086e72339fefbef6fcc604b"
+SRCREV ?= "122c2c22d838ca826e7f4e7360df96fb4e8f7ad2"
 SRCBRANCH ?= "nobranch=1"
 
 SRC_URI = "\
     git://github.com/arduino/linux-qcom.git;${SRCBRANCH};protocol=https \
-    file://0001-libbpf-Fix-Wdiscarded-qualifiers-under-C23.patch \
     file://configs/arduino.cfg \
 "
 
