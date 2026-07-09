@@ -2,7 +2,7 @@ name: Markdown Lint
 
 on:
   push:
-    branches: [ main ]
+    branches: [ wrynose ]
     paths:
       - '**/*.md'
       - '.github/.markdownlint.yaml'

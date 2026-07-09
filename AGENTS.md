@@ -1,4 +1,4 @@
-# Agent Guide for meta-qcom-3rdparty
+# Agent Guide for meta-qcom-3rdparty (wrynose / LTS branch)
 
 This file guides automation agents to run builds / checks the same way CI does:
 
@@ -7,12 +7,22 @@ This file guides automation agents to run builds / checks the same way CI does:
 - run `yocto-patchreview` routinely, and run `yocto-check-layer` before
   opening/updating a PR, via the CI helper scripts.
 
+> **This is the `wrynose` LTS branch.** It is not the primary development
+> branch. Changes are expected to land on **main** first and then be
+> **backported** here with `git cherry-pick -x`, unless they are specific to
+> `wrynose`. See [section 6](#6-pull-request--contribution-workflow-wrynose-lts)
+> for the full workflow.
+
 ## Project Overview
 
 meta-qcom-3rdparty is an OpenEmbedded / Yocto Project BSP layer for
 Third-Party Maintained Qualcomm based platforms. It depends on `meta-qcom`
 (the official Qualcomm reference layer) and provides machine configurations and
 recipes for boards not officially maintained by Qualcomm.
+
+`wrynose` is the **LTS Stable branch**, focused on long term support and
+compatibility with the most recent Yocto Project LTS release. `main` is the
+primary development branch.
 
 ## 1) Prerequisites
 
@@ -101,15 +111,24 @@ kas-container shell --skip repos_checkout ci/uno-q.yml -c "bitbake core-image-ba
 
 Use the helper scripts for CI parity whenever possible.
 
-## 6) Pull request / contribution workflow
+## 6) Pull request / contribution workflow (wrynose LTS)
 
-Follow the repository `README.md` and `docs/contributing.md` contribution flow:
+`wrynose` is the LTS branch. **Propose changes against `main` first.**
+We expect every change to be backported to `wrynose` unless it is specific to
+`wrynose` (e.g. it does not apply to `main`, or `main` has diverged in a way
+that makes the change meaningless there).
 
-1. Target branch: **main**.
-2. Fork `qualcomm-linux/meta-qcom-3rdparty`, create a topic branch, implement changes.
-3. Rebase on latest upstream `main`.
-4. Open a GitHub pull request.
-5. Use PR discussion for review iteration.
+The full backport workflow — the default `git cherry-pick -x` path from
+`main`, the exception for wrynose-only changes, the CI-equivalent checks to
+run before opening a PR, and the `[Backport wrynose]` commit message
+conventions — is documented in [BACKPORTING.md](BACKPORTING.md).
+
+If the change **cannot** be submitted to `main` (it is specific to
+`wrynose`), then submit it directly against `wrynose`, and **explain in the
+commit body and PR description why it is wrynose-only** and not a backport.
+The general contribution flow (fork, topic branch, rebase on latest upstream
+`wrynose`, open a GitHub pull request, iterate via PR discussion) and the
+constraints below still apply.
 
 Important constraints from `docs/contributing.md`:
 

@@ -1,4 +1,10 @@
-# Contributing to meta-qcom-3rdparty
+# Contributing to meta-qcom-3rdparty (wrynose LTS)
+
+`wrynose` is the LTS Stable branch, so changes should be backported from
+`main` whenever possible rather than submitted here directly. Please prefer
+the backporting process and follow [BACKPORTING.md](../BACKPORTING.md) for the
+workflow. Submit a change directly to `wrynose` only when it cannot be applied
+to `main`, and include the necessary explanation.
 
 This document describes how to contribute to the **Qualcomm Linux “meta-qcom-3rdparty”** layer and what standards are expected from contributors and vendors.
 It follows the same conventions used by the Yocto Project and OpenEmbedded upstream layers to ensure interoperability and quality.
@@ -84,7 +90,8 @@ Preferred test distros:
 ## 3  Upstream Baseline
 
 **Goal:** upstream-aligned BSP enablement serving as the base for future Qualcomm Linux releases.
-**Target branch:** `main`
+**Target branch:** `main`, backported to `wrynose` following
+[BACKPORTING.md](../BACKPORTING.md)
 
 ### 3.1  Expected Contribution Types
 
