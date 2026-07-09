@@ -40,9 +40,16 @@ See `conf/machine` for the complete list of supported devices.
 
 ## Contributing
 
-Please submit any patches against the `meta-qcom-3rdparty` layer by using
-the GitHub pull-request feature. Fork the repo, create a branch,
-do the work, rebase from upstream, and create the pull request.
+Please submit any patches against the `meta-qcom-3rdparty` layer (branch
+**main**) by using the GitHub pull-request feature. Fork the repo, create a
+branch, do the work, rebase from upstream, and create the pull request.
+
+On the stable (branch **wrynose**) patches should be integrated as a backport
+whenever possible. See [BACKPORTING.md](BACKPORTING.md) for the backport
+workflow.
+
+If the changes cannot be submitted to (branch **main**), then they must be
+submitted to (branch **wrynose**), including the necessary explanation.
 
 For some useful guidelines when submitting patches, please refer to:
 [Preparing Changes for Submission](https://docs.yoctoproject.org/dev/contributor-guide/submit-changes.html#preparing-changes-for-submission)
