@@ -3,7 +3,7 @@ name: Build on push
 on:
   push:
     branches:
-      - main
+      - wrynose
 
 permissions:
   checks: write
