@@ -3,7 +3,11 @@ require recipes-bsp/u-boot/u-boot.inc
 
 DEPENDS += "bc-native dtc-native gnutls-native python3-pyelftools-native skales-native xxd-native"
 
-SRC_URI = "git://github.com/arduino/u-boot.git;branch=${SRCBRANCH};protocol=https"
+SRC_URI = "\
+    git://github.com/arduino/u-boot.git;branch=${SRCBRANCH};protocol=https \
+    file://asix88179.cfg \
+    file://env-emmc.cfg \
+"
 SRCBRANCH = "qcom-mainline"
 SRCREV = "8008ca96a4dc53ddb3e51b96ea7e86d881ab7969"
 
