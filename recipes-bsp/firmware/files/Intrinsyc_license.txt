@@ -1,0 +1,720 @@
+
+
+
+
+
+
+
+
+Rev. Feb 11, 2014 App D Zip / Dec 11, 2015                              
+                                                                        
+ Page 6 of 6
+
+
+
+SOFTWARE LICENSE AGREEMENT
+
+FOR
+
+DEVELOPMENT PLATFORM SOFTWARE UPDATE 
+
+TO 
+
+INTRINSYC DEVELOPMENT PLATFORM KITS 
+
+POWERED BY 
+
+SNAPDRAGON™ PROCESSORS
+
+
+
+This is a legally binding agreement (“Agreement”) by and between
+Intrinsyc Software International, Inc. (“Intrinsyc”) and the person
+or legal entity you represent (“You” or “Your”). 
+
+
+
+ATTENTION:  THE DEVELOPMENT PLATFORM SOFTWARE UPDATE SHALL ONLY BE
+UTLIZED BY YOU WITH AN Intrinsyc Development Platform Kit THAT WAS
+EITHER PURCHASED BY YOU FROM INTRINSYC OR PROVIDED TO YOU BY AN
+AUTHORIZED TRAINER. THE DEVELOPMENT PLATFORM SOFTWARE UPDATE PROVIDED
+UNDER THIS AGREEMENT IS LICENSED TO YOU AND NOT SOLD.  ANY OPEN SOURCE
+SOFTWARE THAT IS PART OF THE DEVELOPMENT PLATFORM SOFTWARE UPDATE IS
+BEING DISTRIBUTED TO YOU BY INTRINSYC, AND SUBJECT TO THE APPLICABLE
+OPEN SOURCE LICENSE TERMS, THE OPEN SOURCE SOFTWARE IS BEING LICENSED TO
+YOU, AND NOT SOLD, BY THE APPLICABLE PROJECT OR DEVELOPER THAT CREATED
+SUCH OPEN SOURCE SOFTWARE.  THE LICENSE PROVISIONS OF THIS AGREEMENT
+DEFINE WHAT YOU MAY DO WITH THE DEVELOPMENT PLATFORM SOFTWARE UPDATE. 
+THIS AGREEMENT CONTAINS LIMITATIONS ON REPRESENTATIONS, WARRANTIES,
+CONDITIONS, REMEDIES, AND LIABILITIES THAT ARE APPLICABLE TO THE
+DEVELOPMENT PLATFORM SOFTWARE UPDATE AND ANY SUPPORT OR SERVICE(S) THAT
+INTRINSYC MAY PROVIDE TO YOU IN RESPECT TO THE DEVELOPMENT PLATFORM
+SOFTWARE UPDATE.  
+
+
+
+IMPORTANT:  PLEASE CAREFULLY READ THIS AGREEMENT, WHICH CONTAINS THE
+TERMS AND CONDITIONS UNDER WHICH YOU ARE ACQUIRING A LICENSE TO USE THE
+DEVELOPMENT PLATFORM SOFTWARE UPDATE.  YOU ACKNOWLEDGE THAT YOU HAVE
+READ THIS AGREEMENT, UNDERSTAND IT AND AGREE THAT YOUR USE OF THE
+DEVELOPMENT PLATFORM SOFTWARE UPDATE SHALL BE SUBJECT TO THE TERMS AND
+CONDITIONS OF THIS AGREEMENT.  IF YOU DO NOT ACCEPT THE TERMS AND
+CONDITIONS OF THIS AGREEMENT, YOU SHOULD NOT USE THE DEVELOPMENT
+PLATFORM SOFTWARE UPDATE AND PLEASE DO NOT COMPLETE THE DOWNLOAD AND
+INSTALLATION OF THE DEVELOPMENT PLATFORM SOFTWARE UPDATE.  INTRINSYC
+RESERVES THE RIGHT TO REJECT ANY REQUEST FOR ACCESS TO THE DEVELOPMENT
+PLATFORM SOFTWARE UPDATE. IF YOU ARE AN AGENT OR EMPLOYEE OF ANOTHER
+ENTITY, YOU REPRESENT AND WARRANT THAT (I) THE INDIVIDUAL ACCEPTING THIS
+AGREEMENT IS DULY AUTHORIZED TO ACCEPT THIS AGREEMENT ON SUCH ENTITY’S
+BEHALF AND TO BIND SUCH ENTITY, AND (II) SUCH ENTITY HAS FULL POWER,
+CORPORATE OR OTHERWISE, TO ENTER INTO THIS AGREEMENT AND PERFORM ITS
+OBLIGATIONS UNDER THIS AGREEMENT.
+
+
+
+For the purposes of this Agreement:
+
+
+
+“Affiliate” means, with respect to You, Intrinsyc or a Licensor (as
+defined below), as the case may be, any corporation or other entity
+that, at any time, directly or indirectly, Controls, is Controlled by or
+is under common Control with You, Intrinsyc or a Licensor, as the case
+may be (but only as long as such Control exists).  For the purpose of
+this definition, the term “Control” means (i) the beneficial
+ownership (whether direct or indirect) of more than fifty percent (50%)
+of the voting power of an entity or (ii) in the case of an entity that
+does not have outstanding voting shares or securities, the majority
+(i.e., more than fifty percent (50%)) of the equity interests in such
+entity that is now or hereafter owned or controlled by another entity,
+either directly or indirectly.
+
+
+
+“Authorized Trainer” means someone who has been approved in writing
+by Intrinsyc to provide training for educational and research purposes
+with regard to an Intrinsyc Development Platform Kit.
+
+
+
+“Development Platform Hardware” means a hardware development
+platform, which is sold by Intrinsyc as part of an Intrinsyc Development
+Platform Kit and based on one or more Snapdragon processors by Qualcomm
+Technologies, Inc. (“QTI”).
+
+
+
+“Development Platform Software” means collectively, or individually,
+as applicable: (i) any proprietary software or firmware of Intrinsyc or
+its Licensors, in object code form only, that is incorporated within the
+Development Platform Hardware that is made available as part of an
+Intrinsyc Development Platform Kit distributed by Intrinsyc, and (ii)
+any Open Source Software that is incorporated within the Development
+Platform Hardware that is made available as part of an Intrinsyc
+Development Platform Kit distributed by Intrinsyc.
+
+
+
+“Development Platform Software Update” means an upgrade, update, bug
+fix and/or modified version of the Development Platform Software that is
+licensed by Intrinsyc to You pursuant to this Agreement. Any proprietary
+software or firmware of Intrinsyc or its Licensors that is included
+within this Development Platform Software Update shall be provided in
+object code form only.
+
+
+
+“Documentation” means any and all written or electronic
+documentation, including user manuals, reference materials, and/or
+installation manuals that Intrinsyc generally makes available to
+licensees of the Development Platform Software Update.
+
+
+
+“Intellectual Property Rights” or “IPR” means patents (including
+patent applications, reissues, divisions, continuations and extensions
+thereof, all sometimes individually and/or collectively referred to
+herein as “Patent(s)”), utility models, copyrights, trade secrets,
+mask work rights, and any other form of intellectual property right
+protection, excluding trademarks and service marks, afforded under the
+laws of the United States or any other jurisdiction or bi-lateral or
+multi-lateral international treaty regime.
+
+
+
+“Intrinsyc Development Platform Kit” means collectively (a) the
+Development Platform Hardware, (b) the Development Platform Software
+incorporated within said Development Platform Hardware, and (c) any
+accompanying documentation to said hardware and/or software, all of
+which were previously distributed by Intrinsyc to either You or an
+Authorized Trainer under separate agreement(s) with Intrinsyc. 
+
+
+
+“Licensor(s)” means any third party that licenses software to
+Intrinsyc for use in the Development Platform Software Update.
+
+
+
+“Open Source Software” means any software licensed under Open Source
+License Terms.
+
+
+
+“Open Source License Terms” means the licensing and/or distribution
+models commonly known as “open source software” or “free
+software” or any other licensing and/or distribution models pursuant
+to which software is made generally available to the public in source
+code form under terms that permit modification and redistribution of
+such software.  By way of example only and without limitation, Open
+Source License Terms include any versions of the following agreements,
+licenses or distribution models: (1) the GNU General Public License
+(GPL); (2) Lesser/Library GPL (LGPL); (3) the Common Development and
+Distribution License (CDDL); (4) the Artistic License (including without
+limitation PERL); (5) the Netscape Public License; (6) the Sun Community
+Source License (SCSL) or the Sun Industry Standards License (SISL); (7)
+the Apache License; (8) the Common Public License; (9) the Affero GPL
+(AGPL); (10) the Berkeley Software Distribution (BSD); (11) the Mozilla
+Public License (MPL); and (12) any other licenses that are defined as
+OSI (Open Source Initiative) licenses as listed on the opensource.org
+website.
+
+
+
+“Purpose” means the use of the Development Platform Software Update
+solely on Development Platform Hardware to (a) design, develop,
+evaluate, test and/or demonstrate Your hardware and/or software
+applications for use in devices that incorporate one or more Snapdragon
+processors by QTI, and (b) in the case of where You are an Authorized
+Trainer only, train third parties solely for educational and research
+purposes.  
+
+
+
+“Reciprocal Open Source Software” means Open Source Software
+licensed under Reciprocal Open Source License Terms. 
+
+
+
+“Reciprocal Open Source License Terms” means terms in any license or
+agreement for software which require, as a condition of use,
+modification and/or distribution of such software or other software
+incorporated into, derived from or distributed or combined with such
+software (a “Work”), any of the following: (a) the making available
+of source code, object code, or design information regarding the Work;
+(b) the granting of permission for creating derivative works regarding
+the Work; or (c) the granting of a royalty-free license to anyone under
+Intellectual Property Rights in respect to the Work, including, without
+limitation the GPL and LGPL.
+
+
+
+ 1.	Scope. These terms and conditions apply to the Development Platform
+Software Update that You receive from Intrinsyc which is being licensed,
+not sold, to You.  Any other terms or conditions stated by You that are
+different from, or in addition to, these terms and conditions shall be
+of no force and effect, and no course of dealing, usage of trade, or
+course of performance shall be relevant to explain or modify any term
+expressed in this Agreement.  Intrinsyc expressly rejects additional or
+different terms.  
+
+
+
+ 2.	Software License.  Subject to the terms and conditions of this
+Agreement (including, without limitation those terms, conditions and
+restrictions set forth in Sections 3 (Restrictions), 4 (Ownership) and 5
+(Open Source Software) below) and payment of the applicable fees, if
+any, Intrinsyc hereby grants to You (a) a non-exclusive limited,
+internal use only, copyright license to use the Development Platform
+Software Update solely for the Purpose for the duration of the useful
+life of the associated Development Platform Hardware (unless this
+Agreement is terminated sooner as provided in this Agreement), and (b) a
+non-exclusive, limited, internal use only, copyright license to use the
+Documentation solely for the Purpose for the duration of the useful life
+of the associated Development Platform Hardware (unless this Agreement
+is terminated sooner as provided in this Agreement).  Neither this
+Agreement, nor any act by Intrinsyc or its Licensors or any of their
+respective Affiliates pursuant to this Agreement or relating to the
+Development Platform Software Update shall provide to You any license or
+any other rights whatsoever under any Intellectual Property Rights of
+Intrinsyc or its Licensors or any of their respective Affiliates, except
+for the copyright rights expressly set forth in this Section 2.  You
+understand and agree that: (i) neither this Agreement, nor the delivery
+of the Development Platform Software Update alone or when used in
+conjunction with the Development Platform Hardware, grants any right to
+practice, or any other right at all with respect to, any Patent of
+Intrinsyc and its Licensors or any of their respective Affiliates; and
+(ii) a separate license agreement from Intrinsyc and/or its Licensors,
+as the case may be, is needed to use or practice any Patent of Intrinsyc
+or its Licensors or any of their respective Affiliates. You agree not to
+contend in any context that, as a result of the provision or use of the
+Development Platform Software Update alone or in conjunction with the
+Development Platform Hardware, either Intrinsyc or its Licensors or any
+of their respective Affiliates has any obligation to extend, or You or
+any other party has obtained any right to, any license, whether express
+or implied, with respect to any patent of Intrinsyc or its Licensors or
+any of their respective Affiliates for any purpose. Neither this
+Agreement nor the delivery of the Development Platform Software Update
+alone or when used in conjunction with the Development Platform
+Hardware, modifies or abrogates Your obligations under any other
+agreement between You and Intrinsyc or its Licensors or any of their
+respective Affiliates.
+
+
+
+ 3.	Restrictions. You agree not to, and will not encourage others to:
+(i) alter, modify, translate, or adapt any Development Platform Software
+Update or create any derivative works based thereon except in the case
+of any Open Source Software whereby the applicable Open Source License
+Terms shall apply; (ii) decompile, reverse engineer or disassemble any
+Development Platform Software Update or otherwise attempt to learn the
+source code, structure or algorithms underlying any of the Development
+Platform Software Update which is provided in object code form only;
+(iii) copy any Development Platform Software Update except as expressly
+permitted in this Agreement; (iv) assign, sublicense, distribute or
+otherwise transfer or commercially exploit any Development Platform
+Software Update in whole or in part; (v) use the Development Platform
+Software Update except as expressly permitted in this Agreement; (vi)
+disclose any Development Platform Software Update to any third party; or
+(vii) commercialize products that incorporate Development Platform
+Software Update or otherwise make the Development Platform Software
+Update available for value. In addition, You are not permitted to use
+the Development Platform Software Update in any device that (a) is
+capable, under any circumstance (including, without limitation, by
+software or firmware modifications), of initiating or receiving any CDMA
+or OFDMA based wireless wide area network communications including but
+not limited to such networks implementing IS-95, cdmaOne, cdma2000,
+EV-DO, W-CDMA, UMTS, HSPA, TD-SCDMA, LTE, WiMax and any updates or
+revisions thereto, or (b) implements wireless broadcast functionality in
+accordance with any wireless broadcast specifications ratified or
+adopted as a standard by any nationally or internationally recognized
+standards organization for development of or use in any wireless
+network.  Failure to meet or maintain the requirements set forth in this
+Section 4 shall be a material breach of this Agreement and result in the
+immediate termination of this Agreement pursuant to Section 14
+(Termination).
+
+
+
+With regard to any related Documentation provided to You, You may
+reproduce a reasonable number of copies of such Documentation, and use
+such Documentation as permitted above in Section 2 (Software License) of
+this Agreement. Distribution of the Documentation is prohibited without
+the express written permission of Intrinsyc, which it can withhold,
+condition or delay in its sole discretion.
+
+
+
+ 4.	Ownership.  You acknowledge and agree that Intrinsyc and its
+Licensors shall retain all right, title, and interest in and to the
+Development Platform Software Updates and any improvements thereof,
+including without limitation all copyrights, patent rights and trademark
+rights and all other Intellectual Property Rights therein, and You shall
+not remove any copyright notices or other legends from the Development
+Platform Software Update or any accompanying Documentation. Except for
+the limited copyright right granted to You under Section 2 (Software
+License) with respect to the use of the Development Platform Software
+Update, You further acknowledge and agree that Intrinsyc has no right to
+sublicense or otherwise grant any rights under any other Intellectual
+Property Rights of its Licensors or Affiliates of such Licensors,
+including, without limitation, any Patents of its Licensors or
+Affiliates of such Licensors.  
+
+
+
+ 5.	Open Source Software.  The Development Platform Software Update may
+contain Open Source Software.  The terms and conditions governing Your
+use of such Open Source Software shall be in accordance with the Open
+Source License Terms associated with such Open Source Software.  You
+shall not make the portions of the Development Platform Software Update
+that are proprietary to Intrinsyc or its Licensors available pursuant to
+any Open Source License Terms.  You shall not use, combine, modify,
+distribute, make the Development Platform Software Update a derivative
+work of or otherwise exploit the Development Platform Software Update in
+connection with any Reciprocal Open Source Software in any manner that
+would cause the Development Platform Software Update to become subject
+to any Reciprocal Open Source License Terms, and You shall restrict each
+of Your subcontractors and customers in the same manner.
+
+
+
+ 6.	Feedback.  Intrinsyc may from time to time receive suggestions,
+feedback or other information from You concerning the Development
+Platform Software Update and/or Documentation.  Any suggestions,
+feedback or other disclosures made by You are and shall be entirely
+voluntary on Your part.  Notwithstanding any other term in this
+Agreement, Intrinsyc and its Licensors shall be free to use Your
+suggestions, feedback or other information in the further development of
+the Development Platform Software Update and/or Documentation, without
+obligation of any kind to You.  You agree that all inventions, product
+improvements, and modifications to the Development Platform Software
+Update and Documentation conceived of or made by Intrinsyc and/or its
+Licensors that are based, either in whole or in part, on Your ideas,
+feedback, suggestions, or recommended improvements are the exclusive
+property of Intrinsyc and/or its Licensors, and all right, title and
+interest in and to any such inventions, product improvements, and
+modifications will vest solely in Intrinsyc and/or its Licensors, as the
+case may be.  
+
+
+
+ 7.	Technical Support and Updates. Notwithstanding anything to the
+contrary hereunder, You acknowledge and agree that Intrinsyc and its
+Licensors (i) are under no obligation to provide any form of technical
+support for the Development Platform Software Update; and (ii) have no
+obligation to provide any updates to the Development Platform Software
+Update under this Agreement.  If Intrinsyc chooses to provide any form
+of support or information relating to the Development Platform Software
+Update, such support and information shall be deemed confidential and
+proprietary to Intrinsyc and/or its Licensors, as the case may be, and
+shall be protected in accordance with Section 8 (Confidentiality).  
+
+
+
+ 8.	Confidentiality. The Development Platform Software Update,
+Documentation and all related information provided hereunder are
+confidential and proprietary to Intrinsyc and/or its Licensors. You
+agree that You will only use the Development Platform Software Update,
+Documentation and all related information for the Purpose set forth in
+this Agreement. Unauthorized use or disclosure of the Development
+Platform Software Update, Documentation and/or all related information
+would cause irreparable harm and significant injury to Intrinsyc and/or
+its Licensors that would be difficult to ascertain or quantify;
+accordingly You agree that Intrinsyc and/or its Licensors shall have the
+right to obtain injunctive or other equitable relief to enforce the
+terms of this Agreement without limiting any other rights or remedies.  
+
+ 9.	Term.  This Agreement shall commence upon the earlier of the date
+that You first download or use the Development Platform Software Update
+and the date that You accept this Agreement, and shall continue until
+terminated in accordance with Section 10 (Termination).
+
+
+
+ 10.	Termination.  This Agreement shall terminate immediately, without
+notice, if You fail to comply with any term or condition of this
+Agreement.  If either party files a petition in bankruptcy or is
+adjudicated a bankrupt, or if a petition in bankruptcy is filed against
+either party and such petition is not discharged within sixty (60) days
+of such filing, or if either party becomes insolvent, or makes an
+assignment for the benefit of creditors or an arrangement pursuant to
+any bankruptcy law, or if either party discontinues its business or if a
+receiver is appointed for it or its business, this Agreement shall
+automatically terminate without any notice whatsoever being necessary. 
+In addition, Intrinsyc may terminate this Agreement at any time upon
+notice to You or by posting notice on Intrinsyc’s website located at
+www.Intrinsyc.com.  Termination of this Agreement shall be without
+prejudice to any other remedy which may be available to Intrinsyc due to
+default of this Agreement.  Upon termination of this Agreement for any
+reason, all licenses granted by Intrinsyc to You under this Agreement
+shall terminate, and You shall immediately, at Intrinsyc's option,
+either return or destroy (and certify to the same) the Development
+Platform Software Update and Documentation, including all confidential
+information of Intrinsyc and its Licensors.  Any termination of this
+Agreement shall not prejudice Intrinsyc's right to recover any sums due
+or accrued at the time of such termination and shall not prejudice any
+cause of action or claim accrued or to accrue on account of any breach
+or default.  The parties' rights and obligations which by their sense
+and context are intended to survive any termination or expiration of
+this Agreement shall so survive, including but not limited to, Section 3
+(Restrictions). Section 4 (Ownership), Section 6 (Feedback), Section 8
+(Confidentiality), Section 10 (Termination), Section 11 (Disclaimer of
+Warranty), Section 12 (Limitation of Liability), Section 13
+(Indemnification), Section 14 (Covenant Not to Assert), Section 15
+(Government Compliance), Section 16 (U.S. Government End Users), Section
+17 (Third Party Beneficiary) and Section 19 (Miscellaneous).
+
+ 11.	Disclaimer of Warranty.  THE Development Platform Software Update
+and Documentation ARE PROVIDED TO YOU “AS IS.”  INTRINSYC, ITS
+LICENSORS AND THEIR RESPECTIVE AFFILIATES DISCLAIM ANY AND ALL
+WARRANTIES AND CONDITIONS REGARDING THE Development Platform Software
+Update and Documentation, WHETHER EXPRESS OR IMPLIED, INCLUDING, WITHOUT
+LIMITATION, ANY IMPLIED WARRANTIES OR CONDITIONS OF NON-INFRINGEMENT OF
+THIRD PARTY RIGHTS, MERCHANTABILITY, MERCHANTABLE QUALITY, DURABILITY
+AND FITNESS FOR A PARTICULAR PURPOSE.  INTRINSYC, ITS LICENSORS AND
+THEIR RESPECTIVE AFFILIATES DO NOT WARRANT THAT THE OPERATION OF THE
+Development Platform Software Update and Documentation WILL BE
+UNINTERRUPTED OR ERROR FREE.  SOME JURISDICTIONS DO NOT ALLOW THE
+EXCLUSION OF IMPLIED WARRANTIES OR CONDITIONS, SO THE ABOVE EXCLUSION
+MAY NOT APPLY OR MAY BE LIMITED IN THOSE JURISDICTIONS. 
+
+
+
+ 12.	Limitation of Liability.  TO THE MAXIMUM EXTENT PERMITTED BY
+APPLICABLE LAW, IN NO EVENT SHALL INTRINSYC, ITS LICENSORS OR THEIR
+RESPECTIVE AFFILIATES BE LIABLE FOR ANY CONSEQUENTIAL, SPECIAL,
+INCIDENTAL OR INDIRECT DAMAGES OF ANY KIND ARISING OUT OF THE USE OF THE
+Development Platform Software Update or Documentation,  OR OTHERWISE
+UNDER OR IN CONNECTION WITH ANY PROVISION OF THIS AGREEMENT (INCLUDING
+BUT NOT LIMITED TO LOST DATA, LOST PROFITS OR CONFIDENTIAL OR OTHER
+INFORMATION, FOR BUSINESS INTERRUPTION, FOR PERSONAL INJURY, FOR LOSS OF
+PRIVACY, FOR FAILURE TO MEET ANY DUTY INCLUDING OF GOOD FAITH OR OF
+REASONABLE CARE, FOR TORT, NEGLIGENCE AND FOR ANY OTHER PECUNIARY OR
+OTHER LOSS WHATSOEVER), EVEN IF INTRINSYC, ITS LICENSORS AND THEIR
+RESPECTIVE AFFILIATES HAVE BEEN ADVISED OF THE POSSIBILITY OF SUCH
+DAMAGES.    
+
+
+
+NOTWITHSTANDING ANY DAMAGES THAT YOU MIGHT INCUR FOR ANY REASON
+WHATSOEVER (INCLUDING, WITHOUT LIMITATION, ALL DAMAGES REFERENCED HEREIN
+AND ALL DIRECT OR GENERAL DAMAGES IN CONTRACT, TORT, NEGLIGENCE OR
+ANYTHING ELSE), THE ENTIRE LIABILITY (IN THE AGGREGATE) OF INTRINSYC,
+ITS LICENSORS AND THEIR RESPECTIVE AFFILIATES UNDER ANY PROVISION OF
+THIS AGREEMENT AND YOUR EXCLUSIVE REMEDY HEREUNDER SHALL BE LIMITED TO
+TEN DOLLARS ($10).  THE FOREGOING LIMITATIONS, EXCLUSIONS AND
+DISCLAIMERS SHALL APPLY TO THE MAXIMUM EXTENT PERMITTED BY APPLICABLE
+LAW, EVEN IF ANY REMEDY FAILS ITS ESSENTIAL PURPOSE.
+
+ 13.	Indemnification.  You will fully defend, indemnify and hold each of
+Intrinsyc, its Licensors and their respective Affiliates, officers’
+directors, employees, agents, successors and assigns harmless from and
+against any and all claims, demands, losses, damages, judgments, costs,
+liabilities and expenses (including attorneys’ fees) arising out of or
+related to: (i) Your use or misuse of the Development Platform Software
+Update and/or Documentation, including, without limitation, any use,
+reproduction or distribution of the Development Platform Software Update
+and/or Documentation by You, which causes an infringement of any patent,
+copyright, trademark, trade secret, or other Intellectual Property
+Rights or publicity or privacy rights of any third parties arising in
+any jurisdiction anywhere in the world; (ii) the applications and/or
+services developed by You, whether alone or in combination; and (iii)
+any breach of this Agreement by You.  If requested by Intrinsyc, You
+agree to defend Intrinsyc and its Licensors in connection with any third
+party claims, demands, or causes of action resulting from, arising out
+of or in connection with any of the foregoing.  
+
+
+
+ 14.	Covenant Not to Assert.  You hereby agree that neither You nor any
+of Your Affiliates will assert any action for the infringement of Your
+or Your Affiliates’ Patents against (i) Intrinsyc, its Licensors or
+their respective Affiliates for making (or having made), importing,
+using, selling, licensing or otherwise disposing of Development Platform
+Materials (as defined below); (ii) Intrinsyc, its Licensors or their
+respective Affiliates, foundries, for making Development Platform
+Materials for, or selling Development Platform Materials to, Intrinsyc,
+its Licensors or their respective Affiliates; or (iii) any direct or
+indirect customers of Intrinsyc, its Licensors or their respective
+Affiliates, for using Development Platform Materials purchased from
+Intrinsyc, its Licensors or their respective Affiliates.  As used
+herein, the term “Development Platform Materials” means the
+Development Platform Software Update, Intrinsyc Development Platform Kit
+and any subcomponents or software embedded within the foregoing,
+including without limitation, any application specific integrated
+circuits (ASICs), multi-chip modules, electronic devices, integrated
+circuits, system in package (SIP), system on Chip (SoC), system on
+module (SOM) and including firmware thereon and accompanying or
+associated software.
+
+
+
+ 15.	Government Compliance. You shall be solely responsible for knowing
+and complying with any and all applicable federal, state and local
+statutes, laws and regulations, including, but not limited to, knowing
+and complying with any applicable Federal Communications Commission
+rules and regulations, as well as any federal, state and local statutes,
+laws and regulations pertaining to privacy, data protection and
+information security, with respect to the use of the Development
+Platform Software Update and/or Documentation. You acknowledge that all
+hardware, software, source code and technology (collectively,
+"Products") obtained from Intrinsyc and its Licensors are subject to the
+US and Canadian government export control and economic sanctions laws.
+You shall ensure that You, Your subsidiaries and Affiliates will not
+directly or indirectly export, re-export, transfer or release
+(collectively, "export") any Products or direct products thereof to any
+destination, person, entity or end use prohibited or restricted under US
+and/or Canadian laws without prior US and/or Canadian government
+authorization, as the case may be, to the extent required by applicable
+regulation. The US government maintains embargoes and sanctions against
+certain countries, currently Cuba, Iran, North Korea, Sudan, Libya and
+Syria, but any amendments to the countries under a US embargo or
+sanction shall apply.  You acknowledge that other countries may have
+trade laws pertaining to import, use, export or distribution of
+Products, and that compliance with the same is the responsibility of
+You.  This Section shall survive the expiration or termination of this
+Agreement.  You shall not Export Products listed in Supplement 2 to part
+744 of the EAR for military end-uses, as defined in part 744.21, to the
+People’s Republic of China.
+
+
+
+ 16.	U.S. Government End Users.  If You are acting on behalf of an
+agency or instrumentality of the U.S. government, the Development
+Platform Software Update, is “commercial computer software” and
+developed exclusively at private expense by Intrinsyc and/or its
+Licensors, as the case may be.  Pursuant to FAR 12.212 or DFARS 227 7202
+and their successors, as applicable, use, reproduction and disclosure of
+the Development Platform Software Update is governed by the terms of
+this Agreement.  
+
+
+
+ 17.	Third Party Beneficiary.  Licensors of Intrinsyc and their
+Affiliates are third party beneficiaries of this Agreement, and thus
+this Agreement is directly enforceable by such Licensors and their
+Affiliates.
+
+
+
+ 18.	Non-Exclusive.  It is expressly understood that this Agreement is
+non-exclusive for both parties.  Except as specifically agreed
+otherwise, this Agreement does not grant either party any exclusive
+privileges of rights.
+
+
+
+ 19.	Customer acknowledges and agrees that the Intrinsyc Products may
+contain or be accompanied by radio frequency (“RF”) / digital
+hardware and software (“RF Components”) intended for use in a
+controlled environment for internal evaluation, development and
+demonstration purposes only; and the Intrinsyc Products are restricted
+for use in a residential environment or for use by the general purpose
+as an end user device. 
+
+
+
+ 20.	Customer warrants that it will comply with all Federal
+Communications Commission (“FCC”) rules and regulations pertaining
+to the Intrinsyc Products; it will not resell, lease or place the
+Intrinsyc Products on the market in any manner; and it will not operate
+the Intrinsyc Products in licensed radio spectrum without an
+experimental authorization from the FCC under Part 5 of the Code of
+Federal Regulations (CFR) 47. Customer ‘s license and other rights
+shall terminate immediately upon a breach regarding these warranties. 
+
+
+
+ 21.	Use with Drones. Assumption of Risk; Indemnification.  Customer
+acknowledges that the use of unmanned aircraft systems, unmanned aerial
+vehicles, autonomous vehicles, and similar devices (collectively,
+“Drones”) may constitute a potentially dangerous activity and may
+result in significant harm to property, injury, or death. If Customer
+elects to use or distribute the Products purchased from Intrinsyc in
+connection with Drones, Customer assumes all risks and liabilities from
+such use or distribution. Customer shall be solely responsible to ensure
+its compliance with all applicable federal, state, and local statues,
+laws, regulations, and guidelines, including, without limitation,
+Federal Aviation Administration (“FAA”) restrictions or warnings.
+Customer shall defend, indemnify and hold Intrinsyc, its affiliates,
+employees, directors, agents, licensors, suppliers, successors and
+assignees (an “Indemnified Party”) harmless from any and all claims,
+penalties, demands, causes of action, liabilities, lawsuits, or damages,
+including attorneys’ fees and costs, that result from or relate to
+Customer’s use or distribution of the Intrinsyc Products in connection
+with Drones, including, without limitation, any claims for damages to
+property or injury or death to persons and any investigation,
+enforcement action, civil penalty, or other action conducted or cost
+imposed by the FAA that related to Customer’s use or distribution of
+the Intrinsyc Products. If any third party asserts a claim or initiates
+an action against an Indemnified Party for which Customer is responsible
+under this Agreement, Intrinsyc shall promptly notify Customer when
+Intrinsyc becomes aware of such claim or action. Intrinsyc shall have
+the right to participate in the defense of such claim or action,
+including any related settlement negotiations. No such claim or action
+may be settled or compromised without Intinsyc’s express written
+consent, which may be conditioned upon the execution of a release of all
+claims against the Indemnified Parties by the party bringing such claim
+or action. Design Disclaimer. The parties agree that Intrinsyc has not
+had and will have no (unless this Agreement is modified in writing)
+participation or control over the design or assembly of any Drones of
+Customer or any of Customer’s customers, the integration of any
+Intrinsyc Products into any Drones of Customer or any of Customer’s
+customers, or the sale or marketing of any Drone of Customer or any of
+Customer’s customers. Customer shall defend, indemnify and hold the
+indemnified Parties harmless from any and all claims, penalties,
+demands, causes of action, liabilities, lawsuits, or damages, including
+attorneys’ fees and costs, that result from or relate to a Drone
+created by Customer or any of Customer’s customer using any of
+Intrinsyc’s Products or Software, even where the Drone uses an
+Intrinsyc Product or Software without modification, and even where the
+design of the Drone is identical to a reference Drone designed by
+Intrinsyc or its licensors and suppliers. Warnings and Safety Reporting.
+From time to time Intrinsyc or its licensors and suppliers may develop
+warnings or precautions that are important to ensuring the safe
+operation of the Intrinsyc Products in connection with Drones. Intrinsyc
+or its licensors and suppliers have no obligation under this Agreement
+to development any such warnings or precautions. If Intrinsyc
+communicates a warning or precaution to Customer, Customer shall ensure
+that any and all applicable Customers’ customers are advised of such
+warning or precaution. Customer shall report to Intrinsyc any accident
+or incident that is known to Customer, involves the Intrinsyc products
+in connection with Drones, and results in personal injury, property
+damage, invasion of privacy, or theft or hacking of the Intinsyc
+Products. Customer shall report any such accident or incident to
+Intrinsyc within five (5) days of the date on which Customer first
+learns about the accident or incident. This provision does not an any
+way reduce Customer’s liability under this Agreement. 
+
+
+
+
+
+ 22.	Miscellaneous.  This Agreement is governed and interpreted in
+accordance with the laws of the Province of British Columbia without
+giving effect to its conflict of laws provisions. The United Nations
+Convention on Contracts for the International Sale of Goods is expressly
+disclaimed and shall not apply. Any claim arising out of or related to
+this Agreement must be brought exclusively in a federal or provincial
+court located in Vancouver, British Columbia and You consent to the
+jurisdiction and venue of such courts. If any term or provision of this
+Agreement shall be found by a court of competent jurisdiction to be
+invalid, illegal or otherwise unenforceable, the same shall not affect
+the other terms or provisions hereof or the whole of this Agreement
+which shall continue in full force and effect, but such term or
+provision shall be deemed modified to the extent necessary in the
+court's opinion to render such term or provision enforceable, and the
+rights and obligations of the parties shall be construed and enforced
+accordingly, preserving to the fullest extent permissible the intent and
+agreements of the parties set forth herein. Any failure by either party
+to enforce any of its rights under this Agreement shall not be deemed a
+waiver of any right which such party has under this Agreement.  
+
+
+
+This Agreement shall be binding upon and inure to the benefit of any
+successor or permitted assignee of each of the parties.  Neither party
+shall assign or otherwise transfer any of its rights, obligations or
+licenses under this Agreement without the prior written consent of the
+other party.  Notwithstanding the foregoing, Intrinsyc shall be entitled
+to assign all or any part of its rights or obligations under this
+Agreement to one or more of its Affiliates or to a purchaser of all or
+substantially all of its business, assets or stock.  
+
+
+
+The restrictions, limitations, exclusions and conditions set forth in
+this Agreement shall apply even if Intrinsyc, its Licensors or any of
+their Affiliates become aware of or fails to act in a manner to address
+any violation or failure to comply therewith.  You hereby acknowledge
+and agree that the restrictions, limitations, conditions and exclusions
+imposed in this Agreement on the rights granted in this Agreement are
+not a derogation of the benefits of such rights. Intrinsyc and You are
+independent contractors and agree that this Agreement does not establish
+a joint venture, agency relationship, or partnership. This Agreement is
+the entire and exclusive agreement between Intrinsyc and You with
+respect to the Development Platform Software Update and Documentation
+which You have received hereunder and supersedes all prior agreements
+between Intrinsyc and You, along with any other communications (whether
+written or oral) between Intrinsyc and You.  No purchase order or other
+ordering document of Yours which purports to modify or supplement the
+printed text of this Agreement shall add to or vary the terms of this
+Agreement unless signed by an authorized representative of each of the
+parties. The terms of this Agreement may only be varied by written
+amendment between the parties and signed by a duly authorized
+representative of each party.
+
+
+
+The terms of this EULA fully supersede and replace any and all other
+terms between the parties with no other terms being agreed to by
+Intrinsyc. 
+
+
+
+
+
+
+
+
+

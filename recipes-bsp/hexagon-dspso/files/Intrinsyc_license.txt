@@ -1,0 +1,1 @@
+../../firmware/files/Intrinsyc_license.txt
