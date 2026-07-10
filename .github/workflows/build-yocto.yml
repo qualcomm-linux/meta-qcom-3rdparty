@@ -92,6 +92,7 @@ jobs:
         machine:
           - uno-q
           - radxa-dragon-q6a
+          - qcs6490-thundercomm-rubikpi3
         distro:
           - name: nodistro
             yamlfile: ""
