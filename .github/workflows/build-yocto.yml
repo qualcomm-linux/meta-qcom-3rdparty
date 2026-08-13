@@ -112,6 +112,12 @@ jobs:
     uses: qualcomm-linux/meta-qcom/.github/workflows/compile.yml@master
     with:
       name: ${{ matrix.machine }}/${{ matrix.distro.name }}${{ matrix.kernel.dirname }}
+      # One world build per machine is enough for compile coverage. This
+      # layer's ci/world.yml enables both layer-qcom and layer-qcom-3rdparty,
+      # so a world build is expensive and the qcom-distro and alternate
+      # kernel combinations only repeat recipes the nodistro world build
+      # already covered.
+      world: ${{ matrix.distro.name == 'nodistro' && matrix.kernel.type == 'default' }}
       machine: ${{matrix.machine}}
       distro_yaml: ${{matrix.distro.yamlfile}}
       distro_name: ${{matrix.distro.name}}
