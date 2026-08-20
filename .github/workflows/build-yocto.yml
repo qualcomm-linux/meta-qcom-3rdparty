@@ -3,6 +3,10 @@ name: Build Yocto
 on:
   workflow_call:
     inputs:
+      profile:
+        required: false
+        type: string
+        default: "full" # values: pr | full
       skip_if_github_cached:
         required: false
         type: boolean
@@ -180,6 +184,9 @@ jobs:
     uses: qualcomm-linux/meta-qcom/.github/workflows/compile.yml@master
     with:
       name: ${{ matrix.machine }}/${{ matrix.distro.name }}${{ matrix.kernel.dirname }}
+      # Alternate kernel builds are extra coverage rather than a gate, so
+      # keep them out of the pull request profile.
+      enabled: ${{ inputs.profile != 'pr' || matrix.kernel.type == 'default' }}
       # One world build per machine is enough for compile coverage. This
       # layer's ci/world.yml enables both layer-qcom and layer-qcom-3rdparty,
       # so a world build is expensive and the qcom-distro and alternate
