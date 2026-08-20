@@ -10,14 +10,48 @@ on:
   - cron: "22 0 * * *"
 
 permissions:
-  checks: write
-  pull-requests: write
   contents: read
-  packages: read
 
 jobs:
   build-nightly:
+    permissions:
+      contents: read
+      packages: read
+      actions: read
     uses: ./.github/workflows/build-yocto.yml
     with:
       skip_if_github_cached: true
     secrets: inherit
+  test-nightly:
+    # As in push.yml, a machine failing to build must not stop the ones that
+    # did build from being tested.
+    if: ${{ !cancelled() && needs.build-nightly.outputs.build_skipped != 'true' }}
+    permissions:
+      contents: read
+      actions: read
+      checks: write
+      pull-requests: write
+    uses: ./.github/workflows/test.yml
+    needs: build-nightly
+    secrets: inherit
+    with:
+      build_id: ${{ github.run_id }}
+  publish-test-results:
+    # As in push.yml: without !cancelled() an ancestor failure skips this job,
+    # even when the tests it reports on ran fine.
+    if: ${{ !cancelled() && needs.build-nightly.outputs.build_skipped != 'true'
+            && needs.test-nightly.result != 'skipped' }}
+    permissions:
+      contents: read
+      packages: read
+      actions: read
+      checks: write
+      pull-requests: write
+    uses: ./.github/workflows/publish-results.yml
+    needs: [build-nightly, test-nightly]
+    secrets: inherit
+    with:
+      workflow_id: ${{ github.run_id }}
+      event_name: ${{ github.event_name }}
+      event_file: ${{ github.event_path }}
+      commit: ${{ github.sha }}
