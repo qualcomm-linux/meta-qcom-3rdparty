@@ -2,6 +2,20 @@ name: Build Yocto
 
 on:
   workflow_call:
+    inputs:
+      profile:
+        required: false
+        type: string
+        default: "full" # values: pr | full
+      skip_if_github_cached:
+        required: false
+        type: boolean
+        default: false
+        description: "Skip the build matrix if the github actions cache already records a previously-successful run for the same inputs"
+    outputs:
+      build_skipped:
+        description: "True when the compile matrix was skipped because the github cache recorded a previously-successful build for the same inputs"
+        value: ${{ jobs.github-cache-check.outputs.cache_hit }}
 
 # Concurrency is used to prevent multiple workflows from running for the same PR
 concurrency:
@@ -17,58 +31,104 @@ jobs:
     if: github.repository_owner == 'qualcomm-linux'
     runs-on: [self-hosted, qcom-u2404, amd64]
     steps:
+      - uses: actions/checkout@v6
+        with:
+          persist-credentials: false
+
       - name: Setting up kas-container
         run: |
-          KAS_CONTAINER=$RUNNER_TEMP/kas-container
+          KAS_CONTAINER=$GITHUB_WORKSPACE/kas-container
           echo "KAS_CONTAINER=$KAS_CONTAINER" >> $GITHUB_ENV
           LATEST=$(git ls-remote --tags --refs --sort="v:refname" https://github.com/siemens/kas | tail -n1 | sed 's/.*\///')
           wget -qO ${KAS_CONTAINER} https://raw.githubusercontent.com/siemens/kas/refs/tags/$LATEST/kas-container
           chmod +x ${KAS_CONTAINER}
 
-      - uses: actions/checkout@v6
-        with:
-          persist-credentials: false
-
       - name: Run kas lock
         run: |
           ${KAS_CONTAINER} lock ci/base.yml:ci/qcom-distro.yml
 
-      - name: Upload kas lockfile
+      - name: Upload kas
         uses: actions/upload-artifact@v6
         with:
-          name: kas-lockfile
-          path: ci/*.lock.yml
+          name: kas
+          if-no-files-found: error
+          path: |
+            ci/*.lock.yml
+            kas-container
 
-      - name: Upload kas-container
-        uses: actions/upload-artifact@v6
-        with:
-          name: kas-container
-          path: ${{ env.KAS_CONTAINER }}
-
-  yocto-run-checks:
+  github-cache-check:
     needs: kas-setup
     if: github.repository_owner == 'qualcomm-linux'
+    runs-on: ubuntu-latest
+    outputs:
+      cache_hit: ${{ steps.restore.outputs.cache-hit == 'true' }}
+      run_hash: ${{ steps.hash.outputs.run_hash }}
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          persist-credentials: false
+
+      - name: Download kas
+        uses: actions/download-artifact@v7
+        with:
+          name: kas
+
+      - name: Compute build input hash
+        id: hash
+        run: |
+          # Hash inputs that fully determine the build:
+          # - the resolved base.lock.yml produced by `kas lock` (pins every
+          #   layer, meta-qcom included)
+          # - the meta-qcom-3rdparty revision being built
+          LOCK_HASH=$(sha256sum ci/base.lock.yml | cut -d' ' -f1)
+          SRC_HASH=$(git rev-parse HEAD)
+          RUN_HASH=$(printf '%s\n%s' "$LOCK_HASH" "$SRC_HASH" | sha256sum | cut -d' ' -f1)
+          echo "base.lock.yml hash: $LOCK_HASH"
+          echo "meta-qcom-3rdparty HEAD: $SRC_HASH"
+          echo "Combined run hash: $RUN_HASH"
+          echo "run_hash=$RUN_HASH" >> "$GITHUB_OUTPUT"
+
+      - name: Look up previous successful build marker in github cache
+        id: restore
+        uses: actions/cache/restore@v5
+        with:
+          path: /tmp/build-success-marker
+          key: build-success-${{ github.repository }}-${{ github.workflow }}-${{ github.ref_name }}-${{ steps.hash.outputs.run_hash }}
+          lookup-only: true
+
+      - name: Report github-cache-check decision
+        env:
+          SKIP_IF_CACHED: ${{ inputs.skip_if_github_cached }}
+          CACHE_HIT: ${{ steps.restore.outputs.cache-hit }}
+          RUN_HASH: ${{ steps.hash.outputs.run_hash }}
+        run: |
+          if [ "${SKIP_IF_CACHED}" != "true" ]; then
+            echo "skip_if_github_cached not set; build will run"
+          elif [ "${CACHE_HIT}" = "true" ]; then
+            echo "Run cache hit on key build-success, hash ${RUN_HASH}: skipping build matrix"
+          else
+            echo "No previous successful build run recorded in github cache for this hash: build will run"
+          fi
+
+  yocto-run-checks:
+    needs: [kas-setup, github-cache-check]
+    if: |
+      github.repository_owner == 'qualcomm-linux' &&
+      (inputs.skip_if_github_cached != true || needs.github-cache-check.outputs.cache_hit != 'true')
     runs-on: [self-hosted, qcom-u2404, amd64]
     steps:
       - uses: actions/checkout@v6
         with:
           persist-credentials: false
 
-      - name: Download kas lockfile
+      - name: Download kas
         uses: actions/download-artifact@v7
         with:
-          name: kas-lockfile
-          path: ci
-
-      - name: Download kas-container
-        uses: actions/download-artifact@v7
-        with:
-          name: kas-container
-          path: ${{ runner.temp }}
+          name: kas
 
       - name: Setting up kas-container
         run: |
-          KAS_CONTAINER=$RUNNER_TEMP/kas-container
+          KAS_CONTAINER=$GITHUB_WORKSPACE/kas-container
           echo "KAS_CONTAINER=$KAS_CONTAINER" >> $GITHUB_ENV
           chmod +x $KAS_CONTAINER
 
@@ -80,12 +140,22 @@ jobs:
         run: |
           ci/kas-container-shell-helper.sh ci/yocto-check-layer.sh
 
-  compile:
-    needs: kas-setup
+  compile-env:
     if: github.repository_owner == 'qualcomm-linux'
-    runs-on: [self-hosted, qcom-u2404, amd64]
+    runs-on: ubuntu-latest
     outputs:
-      url: ${{ steps.compile_kas.outputs.url }}
+      CACHE_DIR: ${{ steps.compile_env.outputs.CACHE_DIR }}
+    steps:
+      - name: Setup compile variables
+        id: compile_env
+        run: |
+          echo "CACHE_DIR=${{env.CACHE_DIR}}" >> $GITHUB_OUTPUT
+
+  compile:
+    needs: [kas-setup, github-cache-check, compile-env]
+    if: |
+      github.repository_owner == 'qualcomm-linux' &&
+      (inputs.skip_if_github_cached != true || needs.github-cache-check.outputs.cache_hit != 'true')
     strategy:
       fail-fast: false
       matrix:
@@ -111,84 +181,54 @@ jobs:
                 type: qcom-next
                 dirname: "_linux-qcom-next"
                 yamlfile: ":ci/linux-qcom-next.yml"
-    name: ${{ matrix.machine }}/${{ matrix.distro.name }}${{ matrix.kernel.dirname }}
-    steps:
-      - uses: actions/checkout@v6
-        with:
-          persist-credentials: false
-
-      - name: Run kas build
-        uses: qualcomm-linux/meta-qcom/.github/actions/compile@master
-        id: compile_kas
-        with:
-          machine: ${{matrix.machine}}
-          distro_yaml: ${{matrix.distro.yamlfile}}
-          distro_name: ${{matrix.distro.name}}
-          kernel_yaml: ${{matrix.kernel.yamlfile}}
-          kernel_dirname: ${{matrix.kernel.dirname}}
-          cache_dir: ${{env.CACHE_DIR}}
+    uses: qualcomm-linux/meta-qcom/.github/workflows/compile.yml@master
+    with:
+      name: ${{ matrix.machine }}/${{ matrix.distro.name }}${{ matrix.kernel.dirname }}
+      # Alternate kernel builds are extra coverage rather than a gate, so
+      # keep them out of the pull request profile.
+      enabled: ${{ inputs.profile != 'pr' || matrix.kernel.type == 'default' }}
+      # One world build per machine is enough for compile coverage. This
+      # layer's ci/world.yml enables both layer-qcom and layer-qcom-3rdparty,
+      # so a world build is expensive and the qcom-distro and alternate
+      # kernel combinations only repeat recipes the nodistro world build
+      # already covered.
+      world: ${{ matrix.distro.name == 'nodistro' && matrix.kernel.type == 'default' }}
+      machine: ${{matrix.machine}}
+      distro_yaml: ${{matrix.distro.yamlfile}}
+      distro_name: ${{matrix.distro.name}}
+      kernel_yaml: ${{matrix.kernel.yamlfile}}
+      kernel_dirname: ${{matrix.kernel.dirname}}
+      cache_dir: ${{ needs.compile-env.outputs.CACHE_DIR }}
 
   publish_summary:
-    needs: compile
-    if: ${{ always() && github.repository_owner == 'qualcomm-linux' }}
+    needs: [github-cache-check, compile]
+    if: |
+      always() && github.repository_owner == 'qualcomm-linux' &&
+      (inputs.skip_if_github_cached != true || needs.github-cache-check.outputs.cache_hit != 'true')
     runs-on: ubuntu-latest
     steps:
-      - name: 'Download build URLs'
-        uses: actions/download-artifact@v7
+      - uses: qualcomm-linux/meta-qcom/.github/actions/print-build-output@master
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           pattern: build-url*
-          path: urlfiles
-          merge-multiple: true
 
-      - name: "Print output"
-        shell: python
-        id: print-output
-        run: |
-          import os
-          ftable = {}
-          oslist = set()
-          machinelist = set()
-          for fname in os.listdir("./urlfiles"):
-              if fname.startswith("build-url"):
-                  b, m, o = fname.split("_", 2)
-                  oslist.add(o)
-                  machinelist.add(m)
-                  url = ""
-                  with open(f"./urlfiles/{fname}", "r") as urlfile:
-                      url = urlfile.read()
-                  if not o in ftable:
-                      ftable.update({o:{m: url}})
-                  else:
-                      ftable[o].update({m: url})
+  github-cache-save:
+    needs: [github-cache-check, compile]
+    if: |
+      github.repository_owner == 'qualcomm-linux' &&
+      inputs.skip_if_github_cached == true &&
+      needs.github-cache-check.outputs.cache_hit != 'true' &&
+      needs.compile.result == 'success'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Create build success marker
+        run: date -u +%FT%TZ > /tmp/build-success-marker
 
-          table_str = "| |"
-
-          for m in sorted(machinelist):
-              table_str += f" {m} |"
-
-          table_str += "\n|"
-          for i in range(len(machinelist) + 1):
-              table_str += " ---- |"
-
-          table_str += "\n"
-
-          for o in sorted(ftable.keys()):
-              table_str += f"| {o} |"
-              for m in sorted(machinelist):
-                  url = ftable[o].get(m)
-                  if url:
-                      url = url.strip()
-                      table_str += f" [Files]({url}/{o}/{m}/) |"
-                  else:
-                      table_str += " |"
-              table_str += "\n"
-          summary_file_name = os.environ.get("GITHUB_STEP_SUMMARY")
-          if summary_file_name:
-              with open(summary_file_name, "a") as summaryfile:
-                  summaryfile.write("## Download URLs\n")
-                  summaryfile.write(table_str)
-          print(table_str)
+      - name: Save successful build marker to github cache
+        uses: actions/cache/save@v5
+        with:
+          path: /tmp/build-success-marker
+          key: build-success-${{ github.repository }}-${{ github.workflow }}-${{ github.ref_name }}-${{ needs.github-cache-check.outputs.run_hash }}
 
   build_successful:
     if: github.repository_owner == 'qualcomm-linux'

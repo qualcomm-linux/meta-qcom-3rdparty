@@ -32,6 +32,8 @@ PATH="$PATH:$WORK_DIR/oe-core/scripts/pybootchartgui"
 CMD="pybootchartgui.py"
 # display time in minutes instead of seconds
 CMD="$CMD --minutes"
+# display the full time regardless of which processes are currently shown
+CMD="$CMD --full-time"
 # image format (png, svg, pdf); default format png
 CMD="$CMD --format=svg"
 # output path (file or directory) where charts are stored

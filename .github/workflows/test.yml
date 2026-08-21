@@ -1,0 +1,94 @@
+name: Tests
+
+on:
+  workflow_call:
+    inputs:
+      build_id:
+        required: true
+        type: string
+      pr_number:
+        required: false
+        type: string
+        description: "Pull request number. Added to the LAVA job metadata for PR builds"
+      pr_url:
+        required: false
+        type: string
+        description: "Pull request URL. Added to the LAVA job metadata for PR builds"
+    outputs:
+      summary_ids:
+        description: "IDs of the test summary artifact"
+        value: ${{ jobs.collect-ids.outputs.summary_ids }}
+env:
+  # git sha, tag or branch in lava-test-plans repository. Must include the
+  # meta-qcom-3rdparty project, added in 773df66.
+  LAVA_TEST_PLANS_REF: "95c77fdf4c202ccbfd50c2d449760ebb151287a0"
+  # CalVer tag in qcom-linux-testkit repository (format: testkit-YYYY.MM.DD).
+  # Only boot test plans run here, so no test definition is pulled from it yet;
+  # kept in sync with meta-qcom so the pin is meaningful once tests are added.
+  TESTKIT_REF: "testkit-2026.07.19"
+
+jobs:
+  prepare-env:
+    name: Prepare environment
+    runs-on: ubuntu-latest
+    steps:
+      - name: "Print ref"
+        shell: bash
+        run: |
+          echo "lava-test-plans ref: ${{ env.LAVA_TEST_PLANS_REF }}"
+    outputs:
+      lava-test-plans-ref: "${{ env.LAVA_TEST_PLANS_REF }}"
+      testkit-ref: "${{ env.TESTKIT_REF }}"
+
+  test-nodistro:
+    needs: [prepare-env]
+    name: "Test nodistro"
+    uses: ./.github/workflows/test-distro.yml
+    secrets: inherit
+    with:
+      build_id: "${{ inputs.build_id }}"
+      # radxa-dragon-q6a is deliberately absent: it has no device in the lab
+      devices: "uno-q,ventuno-q"
+      project_name: "meta-qcom-3rdparty"
+      distro_name: "nodistro"
+      lava_test_plans_ref: "${{ needs.prepare-env.outputs.lava-test-plans-ref }}"
+      testkit_ref: "${{ needs.prepare-env.outputs.testkit-ref }}"
+      pr_number: "${{ inputs.pr_number }}"
+      pr_url: "${{ inputs.pr_url }}"
+
+  test-qcom-distro:
+    needs: [prepare-env]
+    name: "Test qcom-distro"
+    uses: ./.github/workflows/test-distro.yml
+    secrets: inherit
+    with:
+      build_id: "${{ inputs.build_id }}"
+      devices: "uno-q,ventuno-q"
+      project_name: "meta-qcom-3rdparty"
+      distro_name: "qcom-distro"
+      lava_test_plans_ref: "${{ needs.prepare-env.outputs.lava-test-plans-ref }}"
+      testkit_ref: "${{ needs.prepare-env.outputs.testkit-ref }}"
+      pr_number: "${{ inputs.pr_number }}"
+      pr_url: "${{ inputs.pr_url }}"
+
+  collect-ids:
+    name: "Collect Summary artifact IDs"
+    needs: [test-nodistro, test-qcom-distro]
+    if: |
+      always()
+      && contains(needs.*.result, 'success')
+      && !contains(needs.*.result, 'failure')
+    runs-on: ubuntu-latest
+    permissions:
+      checks: write
+      pull-requests: write
+    outputs:
+      summary_ids: ${{ steps.generate-summary.outputs.artifact_ids }}
+    steps:
+      - name: Summary IDs
+        id: generate-summary
+        env:
+          NODISTRO_SUMMARY_ID: ${{ needs.test-nodistro.outputs.summary_id }}
+          QCOM_DISTRO_SUMMARY_ID: ${{ needs.test-qcom-distro.outputs.summary_id }}
+        run: |
+          echo "artifact_ids=${NODISTRO_SUMMARY_ID},${QCOM_DISTRO_SUMMARY_ID}" >> $GITHUB_OUTPUT
