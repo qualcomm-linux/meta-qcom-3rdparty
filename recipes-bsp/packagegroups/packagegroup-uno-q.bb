@@ -5,6 +5,7 @@ inherit packagegroup
 PACKAGES = " \
     ${PN}-firmware \
     ${PN}-hexagon-dsp-binaries \
+    ${PN}-kernel-modules \
 "
 
 RRECOMMENDS:${PN}-firmware = " \
@@ -18,4 +19,10 @@ RRECOMMENDS:${PN}-firmware = " \
 
 RDEPENDS:${PN}-hexagon-dsp-binaries = " \
     hexagon-dsp-binaries-thundercomm-rb1-adsp \
+"
+
+RRECOMMENDS:${PN}-kernel-modules = " \
+    kernel-module-anx7625 \
+    kernel-module-leds-group-multicolor \
+    kernel-module-spidev \
 "
