@@ -5,6 +5,7 @@ inherit packagegroup
 PACKAGES = " \
     ${PN}-firmware \
     ${PN}-hexagon-dsp-binaries \
+    ${PN}-kernel-modules \
 "
 
 RRECOMMENDS:${PN}-firmware = " \
@@ -23,4 +24,15 @@ RDEPENDS:${PN}-hexagon-dsp-binaries = " \
     hexagon-dsp-binaries-arduino-monza-adsp \
     hexagon-dsp-binaries-arduino-monza-cdsp \
     hexagon-dsp-binaries-arduino-monza-gdsp \
+"
+
+RRECOMMENDS:${PN}-kernel-modules = " \
+    kernel-module-adv7511 \
+    kernel-module-emc2305 \
+    kernel-module-ina2xx \
+    kernel-module-pinctrl-lpass-lpi \
+    kernel-module-pinctrl-sm8450-lpass-lpi \
+    kernel-module-qca808x \
+    kernel-module-snd-soc-max98090 \
+    kernel-module-ucsi-ccg \
 "
