@@ -182,7 +182,7 @@ jobs:
                 type: qcom-next
                 dirname: "_linux-qcom-next"
                 yamlfile: ":ci/linux-qcom-next.yml"
-    uses: qualcomm-linux/meta-qcom/.github/workflows/compile.yml@master
+    uses: ./.github/actions/compile
     with:
       name: ${{ matrix.machine }}/${{ matrix.distro.name }}${{ matrix.kernel.dirname }}
       # Alternate kernel builds are extra coverage rather than a gate, so
