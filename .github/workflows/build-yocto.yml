@@ -117,7 +117,7 @@ jobs:
           persist-credentials: false
 
       - name: Run kas build
-        uses: qualcomm-linux/meta-qcom/.github/actions/compile@master
+        uses: ./.github/actions/compile
         id: compile_kas
         with:
           machine: ${{matrix.machine}}
