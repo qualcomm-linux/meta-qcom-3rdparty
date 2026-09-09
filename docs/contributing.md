@@ -203,9 +203,10 @@ Key elements to include:
   image helpers:
 
   ```bitbake
-  QCOM_BOOT_FILES_SUBDIR = "qrb2210-arduino-imola"
+  QCOM_BOOT_FILES_SUBDIR = "qrb2210"
   QCOM_PARTITION_FILES_SUBDIR ?= "partitions/qrb2210-unoq/emmc-16GB"
-  QCOM_BOOT_FIRMWARE = "firmware-qcom-boot-qrb2210-arduino-imola"
+  QCOM_BOOT_FIRMWARE = "firmware-qcom-boot-qrb2210"
+  QCOM_CDT_FIRMWARE = "firmware-qcom-cdt-uno-q"
   ```
 
 ### 6.2  Packagegroup
@@ -257,7 +258,12 @@ SRCREV:uno-q = "a656209cfb5a49f301c377aa8455a10f83a4a719"
 
 ### 6.4  Boot Firmware Recipe
 
-File: `recipes-bsp/firmware-boot/firmware-qcom-boot-qrb2210-arduino-imola_<version>.bb`
+Reuse the SoC boot firmware recipe from `meta-qcom` whenever the board is
+covered by it (uno-q uses `firmware-qcom-boot-qrb2210`, shared with the RB1
+core kit). Only add a recipe here when the board needs binaries `meta-qcom`
+does not provide, such as the board-specific CDT.
+
+File: `recipes-bsp/firmware-boot/firmware-qcom-cdt-uno-q.bb`
 
 Closed-source boot binaries must be hosted on a **public, no-login mirror**
 managed by the vendor (arduino.cc in this case) and fetched via `SRC_URI`.
@@ -265,8 +271,8 @@ Never commit binaries to the repository:
 
 ```bitbake
 COMPATIBLE_MACHINE = "(uno-q)"
-SRC_URI = "https://downloads.arduino.cc/debian-im/unoq-bootloader-emmc-linux-${PV}.zip"
-include recipes-bsp/firmware-boot/firmware-qcom-boot-common.inc
+SRC_URI = "https://downloads.arduino.cc/debian-im/qrb2210-arduino-imola-unoq-cdt.zip"
+include recipes-bsp/firmware-boot/firmware-qcom-cdt-common.inc
 ```
 
 ### 6.5  CI Integration
@@ -305,7 +311,7 @@ When adding a new board, ensure the following files are present:
 | --- | --- |
 | `conf/machine/<machine>.conf` | Machine definition |
 | `recipes-bsp/packagegroups/packagegroup-<machine>.bb` | Firmware + DSP packagegroup |
-| `recipes-bsp/firmware-boot/firmware-qcom-boot-<soc>-<board>_<ver>.bb` | Boot firmware recipe |
+| `recipes-bsp/firmware-boot/firmware-qcom-*-<soc>-<board>.bb` | Board firmware recipe, when not already covered by `meta-qcom` |
 | `recipes-kernel/linux/linux-<vendor>_<ver>.bb` (or `.bbappend`) | Kernel recipe or revision override |
 | `ci/<machine>.yml` | KAS machine fragment |
 | Entry in `.github/workflows/build-yocto.yml` matrix | CI build registration |
