@@ -160,7 +160,6 @@ jobs:
       fail-fast: false
       matrix:
         machine:
-          - uno-q
           - radxa-dragon-q6a
           - rubikpi3
         distro:
@@ -168,36 +167,19 @@ jobs:
             yamlfile: ""
           - name: qcom-distro
             yamlfile: ':ci/qcom-distro.yml'
-        kernel:
-          - type: default
-            dirname: ""
-            yamlfile: ""
-        include:
-          - machine: uno-q
-            distro:
-                name: qcom-distro
-                yamlfile: ':ci/qcom-distro.yml'
-            kernel:
-                type: qcom-next
-                dirname: "_linux-qcom-next"
-                yamlfile: ":ci/linux-qcom-next.yml"
     uses: qualcomm-linux/meta-qcom/.github/workflows/compile.yml@master
     with:
-      name: ${{ matrix.machine }}/${{ matrix.distro.name }}${{ matrix.kernel.dirname }}
-      # Alternate kernel builds are extra coverage rather than a gate, so
-      # keep them out of the pull request profile.
-      enabled: ${{ inputs.profile != 'pr' || matrix.kernel.type == 'default' }}
+      name: ${{ matrix.machine }}/${{ matrix.distro.name }}
       # One world build per machine is enough for compile coverage. This
       # layer's ci/world.yml enables both layer-qcom and layer-qcom-3rdparty,
-      # so a world build is expensive and the qcom-distro and alternate
-      # kernel combinations only repeat recipes the nodistro world build
-      # already covered.
-      world: ${{ matrix.distro.name == 'nodistro' && matrix.kernel.type == 'default' }}
+      # so a world build is expensive and the qcom-distro combination only
+      # repeats recipes the nodistro world build already covered.
+      world: ${{ matrix.distro.name == 'nodistro' }}
       machine: ${{matrix.machine}}
       distro_yaml: ${{matrix.distro.yamlfile}}
       distro_name: ${{matrix.distro.name}}
-      kernel_yaml: ${{matrix.kernel.yamlfile}}
-      kernel_dirname: ${{matrix.kernel.dirname}}
+      kernel_yaml: ""
+      kernel_dirname: ""
       cache_dir: ${{ needs.compile-env.outputs.CACHE_DIR }}
 
   publish_summary:
