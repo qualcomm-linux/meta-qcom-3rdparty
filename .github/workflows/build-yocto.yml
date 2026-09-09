@@ -162,7 +162,6 @@ jobs:
         machine:
           - uno-q
           - radxa-dragon-q6a
-          - ventuno-q
           - rubikpi3
         distro:
           - name: nodistro
