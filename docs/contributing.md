@@ -146,138 +146,154 @@ Preferred test distros:
 
 ---
 
-## 6  Machine Example – Arduino Uno-Q
+## 6  Machine Example – Thundercomm RUBIK Pi 3
 
-The [Arduino UNO Q](https://www.arduino.cc/product-uno-q) (QRB2210 / QCM2290 SoC) is the reference example for how a new board is integrated in this layer.
+The [Thundercomm RUBIK Pi 3](https://www.thundercomm.com/product/rubik-pi/) (QCS6490 SoC) is the reference example for how a new board is integrated in this layer.
 The following subsections walk through each required component.
 
 ### 6.1  Machine Configuration
 
-File: `conf/machine/uno-q.conf`
+File: `conf/machine/rubikpi3.conf`
 
 Every machine must have a configuration file under `conf/machine/`.
 Key elements to include:
 
+- **Kernel provider** — set it _before_ the SoC include. `qcom-base.inc`
+  applies a weak default and the first `?=` wins, so a later assignment would
+  be silently ignored:
+
+  ```bitbake
+  PREFERRED_PROVIDER_virtual/kernel ?= "linux-qcom-next"
+  ```
+
 - **SoC include** — pull in the common SoC baseline from `meta-qcom`:
 
   ```bitbake
-  require conf/machine/include/qcom-qcm2290.inc
+  require conf/machine/include/qcom-qcs6490.inc
   ```
 
-- **Vendor override** — prepend a vendor-scoped override so that vendor-specific
-  appends can use it without affecting other machines:
+- **Machine features** — extend the SoC defaults with the board's hardware
+  capabilities:
 
   ```bitbake
-  MACHINEOVERRIDES =. "arduino:"
-  ```
-
-- **Kernel provider** — point to the board-specific kernel recipe:
-
-  ```bitbake
-  PREFERRED_PROVIDER_virtual/kernel ?= "linux-arduino"
+  MACHINE_FEATURES += "efi pci"
   ```
 
 - **Device tree** — declare the DTB name(s) used at build and boot time:
 
   ```bitbake
-  QCOM_DTB_DEFAULT ?= "qrb2210-arduino-imola"
-  KERNEL_DEVICETREE ?= "qcom/qrb2210-arduino-imola.dtb"
+  KERNEL_DEVICETREE = "qcom/qcs6490-thundercomm-rubikpi3.dtb"
+  QCOM_DTB_DEFAULT ?= "qcs6490-thundercomm-rubikpi3"
   ```
 
-- **Machine features** — list hardware capabilities:
+- **Boot firmware, partitions and CDT** — align with the layout expected by
+  the `qcom-common` image helpers. The partition layout itself comes from
+  `qcom-ptool` via `qcom-partition-conf`, not from this layer:
 
   ```bitbake
-  MACHINE_FEATURES = "efi usbhost usbgadget alsa wifi bluetooth"
+  QCOM_BOOT_FIRMWARE = "firmware-qcom-boot-rubikpi3"
+  QCOM_BOOT_FILES_SUBDIR = "rubikpi3"
+  QCOM_PARTITION_FILES_SUBDIR ?= "partitions/qcs6490-thundercomm-rubikpi3/ufs"
+  QCOM_CDT_FILE = "RubikPi3_CDT"
   ```
 
-- **Packagegroups** — pull in board firmware and DSP binaries at image level:
+- **Packagegroups** — pull in the SoC essentials and the board firmware at
+  image level:
 
   ```bitbake
   MACHINE_ESSENTIAL_EXTRA_RRECOMMENDS += " \
-      packagegroup-uno-q-firmware \
-      packagegroup-uno-q-hexagon-dsp-binaries \
+      packagegroup-qcom-boot-essential \
+      packagegroup-machine-essential-qcom-qcs6490-soc \
+      packagegroup-rubikpi3-firmware \
   "
-  ```
-
-- **Boot and partition paths** — align with the layout expected by `qcom-common`
-  image helpers:
-
-  ```bitbake
-  QCOM_BOOT_FILES_SUBDIR = "qrb2210"
-  QCOM_PARTITION_FILES_SUBDIR ?= "partitions/qrb2210-unoq/emmc-16GB"
-  QCOM_BOOT_FIRMWARE = "firmware-qcom-boot-qrb2210"
-  QCOM_CDT_FIRMWARE = "firmware-qcom-cdt-uno-q"
   ```
 
 ### 6.2  Packagegroup
 
-File: `recipes-bsp/packagegroups/packagegroup-uno-q.bb`
+File: `recipes-bsp/packagegroups/packagegroup-rubikpi3.bb`
 
-Create a machine-specific packagegroup that groups firmware and Hexagon DSP
-binaries into separate sub-packages.
+Create a machine-specific packagegroup for the board firmware.
 Conditional inclusion based on `DISTRO_FEATURES` avoids pulling in unnecessary
 blobs:
 
 ```bitbake
-PACKAGES = "${PN}-firmware ${PN}-hexagon-dsp-binaries"
+PACKAGES = "${PN}-firmware"
 
 RRECOMMENDS:${PN}-firmware = " \
     ${@bb.utils.contains_any('DISTRO_FEATURES', 'opencl opengl vulkan', \
-        'linux-firmware-qcom-adreno-a702', '', d)} \
-    ${@bb.utils.contains('DISTRO_FEATURES', 'wifi', \
-        'linux-firmware-ath10k-wcn3990', '', d)} \
-    linux-firmware-qcom-qcm2290-audio \
+        'linux-firmware-qcom-adreno-a660 linux-firmware-qcom-qcm6490-adreno', '', d)} \
+    linux-firmware-qcom-qcm6490-qupv3fw \
+    linux-firmware-qcom-vpu \
+    linux-firmware-qcom-qcs6490-thundercomm-rubikpi3-audio \
+    linux-firmware-qcom-qcs6490-compute \
 "
-RDEPENDS:${PN}-hexagon-dsp-binaries = "hexagon-dsp-binaries-thundercomm-rb1-adsp"
 ```
 
-### 6.3  Kernel Recipe
+Boards that ship Hexagon DSP binaries add a separate `${PN}-hexagon-dsp-binaries`
+sub-package, as `packagegroup-radxa-dragon-q6a.bb` does, so images can pick
+the firmware without the DSP blobs.
 
-File: `recipes-kernel/linux/linux-arduino_6.16.bb`
+### 6.3  Kernel
 
-When the board requires a kernel tree or revision different from `linux-qcom-next`,
-provide a dedicated recipe.
-Always restrict its applicability with `COMPATIBLE_MACHINE`:
-
-```bitbake
-COMPATIBLE_MACHINE = "(uno-q)"
-SRC_URI = "git://github.com/arduino/linux-qcom.git;..."
-```
-
-Include a `configs/<board>.cfg` kernel fragment for any board-specific
-`Kconfig` options that must be enabled on top of the upstream `defconfig`.
-
-If the board can share the `linux-qcom-next` tree (e.g. for a secondary build
-variant), use a `.bbappend` with machine overrides instead of a new recipe:
+Prefer the `linux-qcom-next` kernel from `meta-qcom`; `rubikpi3` uses it
+unchanged. Board-specific `Kconfig` fragments or revision pins go into a
+`.bbappend` with machine overrides, never into a copied recipe:
 
 ```bitbake
 # recipes-kernel/linux/linux-qcom-next_git.bbappend
-LINUX_VERSION:uno-q = "6.19+7.0-rc2"
-SRCREV:uno-q = "a656209cfb5a49f301c377aa8455a10f83a4a719"
+FILESEXTRAPATHS:prepend:radxa-dragon-q6a := "${THISDIR}/radxa-dragon-q6a:"
+
+SRC_URI:append:radxa-dragon-q6a = " file://realtek-eth-8169.cfg"
 ```
+
+Only when the board needs a different kernel tree is a dedicated
+`recipes-kernel/linux/linux-<vendor>_<ver>.bb` recipe acceptable. Always
+restrict its applicability with `COMPATIBLE_MACHINE = "(<machine>)"` and keep
+the board-specific options in a `configs/<board>.cfg` fragment merged on top
+of the upstream `defconfig`.
 
 ### 6.4  Boot Firmware Recipe
 
 Reuse the SoC boot firmware recipe from `meta-qcom` whenever the board is
-covered by it (uno-q uses `firmware-qcom-boot-qrb2210`, shared with the RB1
-core kit). Only add a recipe here when the board needs binaries `meta-qcom`
-does not provide, such as the board-specific CDT.
+covered by it. Only add a recipe here when the board needs binaries `meta-qcom`
+does not provide, such as a vendor-signed firmware set or the board-specific CDT.
 
-File: `recipes-bsp/firmware-boot/firmware-qcom-cdt-uno-q.bb`
+File: `recipes-bsp/firmware-boot/firmware-qcom-boot-rubikpi3_20260621.bb`
 
 Closed-source boot binaries must be hosted on a **public, no-login mirror**
-managed by the vendor (arduino.cc in this case) and fetched via `SRC_URI`.
-Never commit binaries to the repository:
+managed by the vendor (the `rubikpi-ai/boot-assets` git repository in this
+case) and fetched via `SRC_URI`. Never commit binaries to the repository:
 
 ```bitbake
-COMPATIBLE_MACHINE = "(uno-q)"
-SRC_URI = "https://downloads.arduino.cc/debian-im/qrb2210-arduino-imola-unoq-cdt.zip"
-include recipes-bsp/firmware-boot/firmware-qcom-cdt-common.inc
+LICENSE = "LicenseRef-LICENSE.qcom-2"
+LIC_FILES_CHKSUM = "file://LICENSE.txt;md5=165287851294f2fb8ac8cbc5e24b02b0"
+
+SRC_URI = "git://github.com/rubikpi-ai/boot-assets;protocol=https;branch=main;destsuffix=${BP}"
+SRCREV = "10b868574aa4d06fb3836399d10eb5c792765504"
+
+inherit allarch deploy
+
+QCOM_BOOT_IMG_SUBDIR = "rubikpi3"
+
+COMPATIBLE_MACHINE = "(rubikpi3)"
+```
+
+`do_deploy` installs the boot binaries under `${QCOM_BOOT_IMG_SUBDIR}`,
+including the CDT named by `QCOM_CDT_FILE`, where the `qcomflash` class picks
+them up.
+
+Vendor firmware under a license the distro lists as incompatible needs an
+exception for the images that ship it, confined to the machine and kept under
+`dynamic-layers/qcom-distro/` so it only applies with `meta-qcom-distro`:
+
+```bitbake
+# dynamic-layers/qcom-distro/recipes-products/images/qcom-multimedia-image.bbappend
+INCOMPATIBLE_LICENSE_EXCEPTIONS:append:rubikpi3 = " firmware-qcom-boot-rubikpi3:LicenseRef-LICENSE.qcom-2"
 ```
 
 ### 6.5  CI Integration
 
-File: `ci/uno-q.yml`
+File: `ci/rubikpi3.yml`
 
 Add a [kas](https://kas.readthedocs.io/en/latest/userguide.html) machine
 fragment that extends `ci/base.yml`:
@@ -288,17 +304,17 @@ header:
   includes:
   - ci/base.yml
 
-machine: uno-q
+machine: rubikpi3
 ```
 
 Then register the machine in the build matrix inside
 `.github/workflows/build-yocto.yml` so that every pull request triggers a
-`nodistro` build (and optionally a `qcom-distro` build) for the new board:
+`nodistro` and a `qcom-distro` build for the new board:
 
 ```yaml
 matrix:
   machine:
-    - uno-q
+    - rubikpi3
 ```
 
 ---
@@ -310,9 +326,9 @@ When adding a new board, ensure the following files are present:
 | File | Purpose |
 | --- | --- |
 | `conf/machine/<machine>.conf` | Machine definition |
-| `recipes-bsp/packagegroups/packagegroup-<machine>.bb` | Firmware + DSP packagegroup |
-| `recipes-bsp/firmware-boot/firmware-qcom-*-<soc>-<board>.bb` | Board firmware recipe, when not already covered by `meta-qcom` |
-| `recipes-kernel/linux/linux-<vendor>_<ver>.bb` (or `.bbappend`) | Kernel recipe or revision override |
+| `recipes-bsp/packagegroups/packagegroup-<machine>.bb` | Firmware (and DSP) packagegroup |
+| `recipes-bsp/firmware-boot/firmware-qcom-boot-<machine>_<ver>.bb` | Board firmware recipe, when not already covered by `meta-qcom` |
+| `recipes-kernel/linux/linux-qcom-next_git.bbappend` (or `linux-<vendor>_<ver>.bb`) | Kernel fragments / revision override, or dedicated kernel recipe |
 | `ci/<machine>.yml` | KAS machine fragment |
 | Entry in `.github/workflows/build-yocto.yml` matrix | CI build registration |
 
