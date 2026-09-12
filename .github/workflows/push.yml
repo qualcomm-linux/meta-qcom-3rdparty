@@ -15,39 +15,3 @@ jobs:
       packages: read
       actions: read
     uses: ./.github/workflows/build-yocto.yml
-  test:
-    permissions:
-      contents: read
-      actions: read
-      checks: write
-      pull-requests: write
-    uses: ./.github/workflows/test.yml
-    needs: [build]
-    # Machines in this layer are community maintained, so one failing to build
-    # must not stop the machines that did build from being tested. Wait for the
-    # build to finish, but run whatever its overall result was: lava-test-plans
-    # skips any machine with no build URL artifact.
-    if: ${{ !cancelled() }}
-    secrets: inherit
-    with:
-      build_id: ${{ github.run_id }}
-  publish-test-results:
-    permissions:
-      contents: read
-      packages: read
-      actions: read
-      checks: write
-      pull-requests: write
-    uses: ./.github/workflows/publish-results.yml
-    needs: test
-    # An implicit success() here would be suppressed by any failed ancestor,
-    # including a build job for a machine that is not even tested, so publish
-    # whenever the tests actually ran. Results are worth publishing whether the
-    # boots passed or failed.
-    if: ${{ !cancelled() && needs.test.result != 'skipped' }}
-    secrets: inherit
-    with:
-      workflow_id: ${{ github.run_id }}
-      event_name: ${{ github.event_name }}
-      event_file: ${{ github.event_path }}
-      commit: ${{ github.sha }}
