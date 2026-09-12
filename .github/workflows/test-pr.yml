@@ -66,7 +66,13 @@ jobs:
     # the machines that did build produced artifacts, and lava-test-plans skips
     # the ones that did not. Only a cancelled or skipped build has nothing to
     # test.
+    #
+    # Disabled: no machine in this layer currently has a LAVA device and a
+    # lava-test-plans entry, so there is nothing to boot. Revert the commit
+    # that added the leading "false &&" once one does, and list the machine
+    # in test.yml.
     if: |
+      false &&
       contains(fromJSON('["success", "failure"]'), github.event.workflow_run.conclusion)
       && needs.determine-target-branch.outputs.branch == 'main'
     permissions:

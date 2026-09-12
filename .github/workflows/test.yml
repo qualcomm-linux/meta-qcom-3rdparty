@@ -47,8 +47,11 @@ jobs:
     secrets: inherit
     with:
       build_id: "${{ inputs.build_id }}"
-      # radxa-dragon-q6a is deliberately absent: it has no device in the lab
-      devices: "uno-q,ventuno-q"
+      # No machine in this layer currently has a device in the lab, so the
+      # callers of this workflow (push.yml, nightly-build.yml, test-pr.yml)
+      # are disconnected. List the machines here and reconnect the callers
+      # once a board gets a LAVA device and a lava-test-plans entry.
+      devices: ""
       project_name: "meta-qcom-3rdparty"
       distro_name: "nodistro"
       lava_test_plans_ref: "${{ needs.prepare-env.outputs.lava-test-plans-ref }}"
@@ -63,7 +66,7 @@ jobs:
     secrets: inherit
     with:
       build_id: "${{ inputs.build_id }}"
-      devices: "uno-q,ventuno-q"
+      devices: ""
       project_name: "meta-qcom-3rdparty"
       distro_name: "qcom-distro"
       lava_test_plans_ref: "${{ needs.prepare-env.outputs.lava-test-plans-ref }}"

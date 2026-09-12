@@ -68,8 +68,8 @@ Machines available at `conf/machines`, kas fragments at `ci/<machine>.yml`.
 Example builds:
 
 ```sh
-# Build for uno-q with the Qualcomm distro
-export KAS_YAMLS="ci/uno-q.yml:ci/qcom-distro.yml"
+# Build for rubikpi3 with the Qualcomm distro
+export KAS_YAMLS="ci/rubikpi3.yml:ci/qcom-distro.yml"
 "${KAS_CONTAINER:-kas-container}" build "${KAS_YAMLS}"
 
 # World build (all machines in this layer)
@@ -96,7 +96,7 @@ ci/kas-container-shell-helper.sh ci/yocto-check-layer.sh
 For one-off commands:
 
 ```sh
-kas-container shell --skip repos_checkout ci/uno-q.yml -c "bitbake core-image-base"
+kas-container shell --skip repos_checkout ci/rubikpi3.yml -c "bitbake core-image-base"
 ```
 
 Use the helper scripts for CI parity whenever possible.
@@ -136,11 +136,11 @@ ci/kas-container-shell-helper.sh ci/yocto-check-layer.sh
 Use the style seen in recent history:
 
 - `component: imperative summary` (preferred when scoped), e.g.
-  - `conf: add machine configuration for Arduino UNO Q`
-  - `packagegroup-uno-q: add recipe`
-  - `ci: add uno-q.yml kas fragment`
+  - `conf: add machine configuration for Thundercomm RUBIK Pi 3`
+  - `packagegroup-rubikpi3: add recipe`
+  - `ci: add rubikpi3 kas fragment`
 - Or concise imperative summary when cross-cutting, e.g.
-  - `workflows: add build for arduino uno-q`
+  - `workflows: add build for rubikpi3`
 
 Every commit **must** include a `Signed-off-by` trailer using the identity from
 the local git configuration:
