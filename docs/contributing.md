@@ -272,7 +272,7 @@ managed by the vendor (the `rubikpi-ai/boot-assets` git repository in this
 case) and fetched via `SRC_URI`. Never commit binaries to the repository:
 
 ```bitbake
-LICENSE = "LicenseRef-LICENSE.qcom-2"
+LICENSE = "LICENSE.qcom-2"
 LIC_FILES_CHKSUM = "file://LICENSE.txt;md5=165287851294f2fb8ac8cbc5e24b02b0"
 
 SRC_URI = "git://github.com/rubikpi-ai/boot-assets;protocol=https;branch=main;destsuffix=${BP}"
@@ -295,7 +295,7 @@ exception for the images that ship it, confined to the machine and kept under
 
 ```bitbake
 # dynamic-layers/qcom-distro/recipes-products/images/qcom-multimedia-image.bbappend
-INCOMPATIBLE_LICENSE_EXCEPTIONS:append:rubikpi3 = " firmware-qcom-boot-rubikpi3:LicenseRef-LICENSE.qcom-2"
+INCOMPATIBLE_LICENSE_EXCEPTIONS:append:rubikpi3 = " firmware-qcom-boot-rubikpi3:LICENSE.qcom-2"
 ```
 
 ### 6.5  CI Integration
