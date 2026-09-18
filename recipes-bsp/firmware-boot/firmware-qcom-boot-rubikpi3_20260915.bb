@@ -2,11 +2,11 @@ SUMMARY = "Boot firmware for Thundercomm RUBIK Pi 3"
 DESCRIPTION = "Qualcomm-signed SoC boot firmware and Rubik Pi 3-specific LUN 6 \
 payloads from rubikpi-ai/boot-assets."
 
-LICENSE = "LicenseRef-LICENSE.qcom-2"
+LICENSE = "LICENSE.qcom-2"
 LIC_FILES_CHKSUM = "file://LICENSE.txt;md5=165287851294f2fb8ac8cbc5e24b02b0"
 
-SRC_URI = "git://github.com/rubikpi-ai/boot-assets;protocol=https;branch=main;destsuffix=${BP}"
-SRCREV = "10b868574aa4d06fb3836399d10eb5c792765504"
+SRC_URI = "git://github.com/rubikpi-ai/boot-assets;protocol=https;branch=qli2.0;destsuffix=${BP}"
+SRCREV = "eaf0c648cb792c50606d23b97b83117bb536f051"
 
 INHIBIT_DEFAULT_DEPS = "1"
 do_configure[noexec] = "1"
