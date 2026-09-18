@@ -265,7 +265,7 @@ Reuse the SoC boot firmware recipe from `meta-qcom` whenever the board is
 covered by it. Only add a recipe here when the board needs binaries `meta-qcom`
 does not provide, such as a vendor-signed firmware set or the board-specific CDT.
 
-File: `recipes-bsp/firmware-boot/firmware-qcom-boot-rubikpi3_20260621.bb`
+File: `recipes-bsp/firmware-boot/firmware-qcom-boot-rubikpi3_20260915.bb`
 
 Closed-source boot binaries must be hosted on a **public, no-login mirror**
 managed by the vendor (the `rubikpi-ai/boot-assets` git repository in this
@@ -275,8 +275,8 @@ case) and fetched via `SRC_URI`. Never commit binaries to the repository:
 LICENSE = "LICENSE.qcom-2"
 LIC_FILES_CHKSUM = "file://LICENSE.txt;md5=165287851294f2fb8ac8cbc5e24b02b0"
 
-SRC_URI = "git://github.com/rubikpi-ai/boot-assets;protocol=https;branch=main;destsuffix=${BP}"
-SRCREV = "10b868574aa4d06fb3836399d10eb5c792765504"
+SRC_URI = "git://github.com/rubikpi-ai/boot-assets;protocol=https;branch=qli2.0;destsuffix=${BP}"
+SRCREV = "eaf0c648cb792c50606d23b97b83117bb536f051"
 
 inherit allarch deploy
 
