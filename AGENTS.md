@@ -24,6 +24,20 @@ recipes for boards not officially maintained by Qualcomm.
 compatibility with the most recent Yocto Project LTS release. `main` is the
 primary development branch.
 
+## Agent skills
+
+Reusable agent skills for the qualcomm-linux projects are maintained in
+[qcom-linux-skills](https://github.com/qualcomm-linux/qcom-linux-skills),
+in the `SKILL.md` format understood by Claude Code, Codex, Cursor and
+similar agents. Several of them cover the workflows described in this file,
+such as `qcom-yocto-build-image` (build images with kas-container),
+`qcom-yocto-pre-pr-checks` (the CI-parity checks from section 4),
+`qcom-kernel-platform-backport` (backport board enablement to the
+qcom-6.18.y kernel), and `qcom-flash-qdl` / `qcom-boot-validate` (flash
+and boot-test a board). Install them with the repository's `install.sh`
+and prefer an existing skill over re-deriving the workflow; improvements
+go back to that catalog.
+
 ## 1) Prerequisites
 
 1. `kas-container` available on PATH, or set `KAS_CONTAINER=/abs/path/to/kas-container`
