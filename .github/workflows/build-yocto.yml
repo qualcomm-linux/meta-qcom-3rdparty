@@ -108,7 +108,7 @@ jobs:
                 type: qcom-next
                 dirname: "_linux-qcom-next"
                 yamlfile: ":ci/linux-qcom-next.yml"
-    uses: qualcomm-linux/meta-qcom/.github/workflows/compile.yml@master
+    uses: qualcomm-linux/meta-qcom/.github/workflows/compile.yml@wrynose
     with:
       name: ${{ matrix.machine }}/${{ matrix.distro.name }}${{ matrix.kernel.dirname }}
       machine: ${{matrix.machine}}
@@ -123,7 +123,7 @@ jobs:
     if: ${{ always() && github.repository_owner == 'qualcomm-linux' }}
     runs-on: ubuntu-latest
     steps:
-      - uses: qualcomm-linux/meta-qcom/.github/actions/print-build-output@master
+      - uses: qualcomm-linux/meta-qcom/.github/actions/print-build-output@wrynose
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           pattern: build-url*
