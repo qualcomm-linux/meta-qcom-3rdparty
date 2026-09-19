@@ -18,6 +18,10 @@ on:
       summary_ids:
         description: "IDs of the test summary artifact"
         value: ${{ jobs.collect-ids.outputs.summary_ids }}
+    secrets:
+      LAVATOKEN:
+        required: true
+        description: "Token used to submit jobs to the LAVA lab"
 env:
   # git sha, tag or branch in lava-test-plans repository. Must include the
   # meta-qcom-3rdparty project, added in 773df66.
@@ -44,7 +48,8 @@ jobs:
     needs: [prepare-env]
     name: "Test nodistro"
     uses: ./.github/workflows/test-distro.yml
-    secrets: inherit
+    secrets:
+      LAVATOKEN: ${{ secrets.LAVATOKEN }}
     with:
       build_id: "${{ inputs.build_id }}"
       # No machine in this layer currently has a device in the lab, so the
@@ -63,7 +68,8 @@ jobs:
     needs: [prepare-env]
     name: "Test qcom-distro"
     uses: ./.github/workflows/test-distro.yml
-    secrets: inherit
+    secrets:
+      LAVATOKEN: ${{ secrets.LAVATOKEN }}
     with:
       build_id: "${{ inputs.build_id }}"
       devices: ""
