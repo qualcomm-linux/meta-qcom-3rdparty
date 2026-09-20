@@ -21,4 +21,3 @@ jobs:
     uses: ./.github/workflows/build-yocto.yml
     with:
       skip_if_github_cached: true
-    secrets: inherit
