@@ -47,10 +47,9 @@ Please submit any patches against the `meta-qcom-3rdparty` layer by using
 the GitHub pull-request feature. Fork the repo, create a branch,
 do the work, rebase from upstream, and create the pull request.
 
-For some useful guidelines when submitting patches, please refer to:
-[Preparing Changes for Submission](https://docs.yoctoproject.org/dev/contributor-guide/submit-changes.html#preparing-changes-for-submission)
-
-Pull requests will be discussed within the GitHub pull-request infrastructure.
+Please read [docs/contributing.md](docs/contributing.md) for the contribution
+workflow, the layer scope rules and the commit subject and message
+requirements before opening a pull request.
 
 ## Communication
 
