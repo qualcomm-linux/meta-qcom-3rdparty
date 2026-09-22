@@ -8,7 +8,9 @@ meaningless there).
 
 1. Land the change on **main** first, following the main contribution
    workflow (fork, topic branch, rebase on latest upstream `main`, open a
-   PR).
+   PR). Label the pull request `backport wrynose` and the backport PR is
+   opened automatically once it is merged; the steps below are for when that
+   fails (conflicts) or the change is wrynose-only.
 2. Once it is merged on `main`, backport the merged commit(s) to `wrynose`
    using **`git cherry-pick -x`** so the backport records the original commit
    hash in the message (`(cherry picked from commit <sha>)`):
@@ -38,15 +40,17 @@ ci/kas-container-shell-helper.sh ci/yocto-check-layer.sh
 ## Commit messages for backports
 
 For backports, preserve the original main commit message and metadata, and
-keep the `cherry-pick -x` trailer intact. The branch convention is to prefix
-the subject with `[Backport wrynose]`, following the practice established in
-meta-qcom:
+keep the `cherry-pick -x` trailer intact. The `[Backport wrynose]` prefix
+belongs to the **pull request subject only**, following the practice
+established in meta-qcom:
 
-- `[Backport wrynose] linux-arduino: bump to the 7.0 branch (#48)`
-- `[Backport wrynose] ci: add uno-q.yml kas fragment (#12)`
+- `[Backport wrynose] firmware-qcom-boot-rubikpi3: use QLI2.0 boot assets (#63)`
+- `[Backport wrynose] ci: add rubikpi3 kas fragment (#41)`
 
-The backported body should retain the original explanation and end with the
-cherry-pick trailer that `git cherry-pick -x` adds:
+Never add the prefix to a commit subject: the commits are normal patches
+whose only backport marker is the cherry-pick line. The backported body
+should retain the original explanation and end with the trailer that
+`git cherry-pick -x` adds:
 
 ```text
 (cherry picked from commit <sha>)

@@ -135,8 +135,9 @@ documented in [docs/contributing.md](docs/contributing.md).
 
 The full backport workflow — the default `git cherry-pick -x` path from
 `main`, the exception for wrynose-only changes, the CI-equivalent checks to
-run before opening a PR, and the `[Backport wrynose]` commit message
-conventions — is documented in [BACKPORTING.md](BACKPORTING.md).
+run before opening a PR, and the `[Backport wrynose]` pull request subject
+convention — is documented in [BACKPORTING.md](BACKPORTING.md) and in
+[section 8](#8-backporting-to-a-release-branch).
 
 If the change **cannot** be submitted to `main` (it is specific to
 `wrynose`), then submit it directly against `wrynose`, and **explain in the
