@@ -10,11 +10,14 @@ on:
   - cron: "22 0 * * *"
 
 permissions:
-  checks: write
-  pull-requests: write
   contents: read
-  packages: read
 
 jobs:
   build-nightly:
+    permissions:
+      contents: read
+      packages: read
+      actions: read
     uses: ./.github/workflows/build-yocto.yml
+    with:
+      skip_if_github_cached: true

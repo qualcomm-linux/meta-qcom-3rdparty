@@ -37,6 +37,7 @@ CMD="$CMD --no-auto"
 CMD="$CMD --dependency"
 CMD="$CMD $WORK_DIR/oe-core/meta"
 CMD="$CMD $WORK_DIR/meta-qcom"
+CMD="$CMD $WORK_DIR/meta-lts-mixins"
 # Disable automatic testing of dependencies
 CMD="$CMD --no-auto-dependency"
 # Set machines to all machines defined in this BSP layer

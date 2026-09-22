@@ -6,11 +6,12 @@ on:
       - wrynose
 
 permissions:
-  checks: write
-  pull-requests: write
   contents: read
-  packages: read
 
 jobs:
   build:
+    permissions:
+      contents: read
+      packages: read
+      actions: read
     uses: ./.github/workflows/build-yocto.yml
