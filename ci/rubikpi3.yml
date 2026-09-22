@@ -5,4 +5,4 @@ header:
   includes:
   - ci/base.yml
 
-machine: uno-q
+machine: rubikpi3
