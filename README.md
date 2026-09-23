@@ -51,10 +51,9 @@ workflow.
 If the changes cannot be submitted to (branch **main**), then they must be
 submitted to (branch **wrynose**), including the necessary explanation.
 
-For some useful guidelines when submitting patches, please refer to:
-[Preparing Changes for Submission](https://docs.yoctoproject.org/dev/contributor-guide/submit-changes.html#preparing-changes-for-submission)
-
-Pull requests will be discussed within the GitHub pull-request infrastructure.
+Please read [docs/contributing.md](docs/contributing.md) for the contribution
+workflow, the layer scope rules and the commit subject and message
+requirements before opening a pull request.
 
 ## Communication
 

@@ -37,15 +37,73 @@ Our process mirrors the official Yocto Project contribution flow — see
 
 - **Fork and propose changes** via GitHub Pull Requests.
   Use **draft mode** for work-in-progress patches.
-- **Create clean commits:** one logical change per commit.
-  Follow [Yocto commit style](https://docs.yoctoproject.org/dev/contributor-guide/submit-changes.html#writing-good-commit-messages).
-- **Explain _why_** the change is needed in the commit message.
-- **Add a Signed-off-by line** to certify compliance with the [Developer’s Certificate of Origin](https://developercertificate.org/).
+- **Create clean commits:** one logical change per commit, with the subject
+  and message described in section 2.2.
+- **Sign off every commit** and add the trailers described in section 2.3.
 - **Validate locally** before submission: build with `bitbake`, flash, and verify runtime.
 - **Address review feedback** and re-push to update your PR.
   Use `git rebase -i` to squash or reorder commits as needed.
 
-### 2.2  Machine-Specific Isolation
+### 2.2  Commit Messages
+
+Each commit must be atomic: it must contain exactly one logical change. Do not
+squash multiple features, fixes, or otherwise unrelated changes into a single
+commit — split them into separate commits, one per logical change. Each patch
+must be logically coherent, self-contained, and independently buildable, and
+the tree must remain in a functional state after every commit.
+
+Each commit must contain a well-formed commit subject and message, following
+the [Yocto commit style](https://docs.yoctoproject.org/dev/contributor-guide/submit-changes.html#writing-good-commit-messages).
+
+The commit subject must follow the form `recipe-name: summary of the changes`,
+where `recipe-name` identifies the recipe or component being touched and the
+summary concisely describes the change. Keep the subject short and specific,
+capturing intent rather than a file-by-file dump. For example:
+
+- `firmware-qcom-boot-rubikpi3: add boot firmware recipe`
+- `packagegroup-rubikpi3: add firmware package group`
+- `qcom-multimedia-image: add boot fw license exception for rubikpi3`
+
+Use consistent wording for version upgrades, e.g.
+`recipe-name: upgrade vX.Y.Z -> vA.B.C`.
+
+The commit message (the body) must:
+
+- be written in plain English;
+- first describe the issue or the problem that is being solved, so that a
+  reader can understand _why_ the change is needed;
+- then use the imperative mood (e.g. "add", "drop", "enable", "update")
+  to describe the actions to be performed in order to solve the problem;
+- not merely restate _what_ the diff changes line by line — the diff
+  already shows that;
+- avoid unnecessary bullet lists; prefer prose paragraphs;
+- wrap body lines for readability (~72 chars).
+
+### 2.3  Sign-off and Trailers
+
+Every commit must also carry a `Signed-off-by` trailer, certifying compliance
+with the [Developer’s Certificate of Origin](https://developercertificate.org/),
+matching the author identity from your local `git config` (use
+`git commit -s`). Never fabricate a name or email; always read them from
+`git config`.
+
+If an AI coding assistant or other advanced tool was used to help create the
+change, acknowledge that use by adding an `Assisted-by` trailer in the form:
+
+```text
+Assisted-by: AGENT_NAME:MODEL_VERSION [TOOL1] [TOOL2]
+```
+
+Where `AGENT_NAME` is the name of the AI tool or framework, `MODEL_VERSION` is
+the specific model version used, and `[TOOL1] [TOOL2]` are optional specialized
+analysis tools. Basic development tools (git, gcc, make, editors) should not be
+listed. For example:
+
+```text
+Assisted-by: ExampleAgent:example-model-1.0
+```
+
+### 2.4  Machine-Specific Isolation
 
 Because this layer expects to host multiple vendor platforms:
 
@@ -55,14 +113,14 @@ Because this layer expects to host multiple vendor platforms:
 
 Reference: [BitBake Overrides](https://docs.yoctoproject.org/ref-manual/variables.html#var-OVERRIDES)
 
-### 2.3  Repository Organization
+### 2.5  Repository Organization
 
 All vendor boards live together in a single layer:
 
 - **No branch or folder segregation per vendor.**
 - Maintain quality equivalent to `meta-qcom`.
 
-### 2.4  No Recipe Forks
+### 2.6  No Recipe Forks
 
 - Forks of recipes from `meta-qcom`, `meta-qcom-hwe`, or base OE / Yocto layers are **not accepted**.
 - Use `.bbappend` files for vendor-specific patching.
@@ -70,7 +128,7 @@ All vendor boards live together in a single layer:
 
 Reference: [Understanding bbappends](https://docs.yoctoproject.org/ref-manual/terms.html#term-Append-Files)
 
-### 2.5  Scope of Changes
+### 2.7  Scope of Changes
 
 - Limit changes to **BSP-specific content** (kernel, firmware, device tree, drivers, partition configs).
 - Avoid distribution-specific logic — vendors may ship separate distro layers.
@@ -80,7 +138,7 @@ Preferred test distros:
 - `nodistro` (systemd-compatible)
 - [`meta-qcom-distro`](https://github.com/qualcomm-linux/meta-qcom-distro)
 
-### 2.6  Maintainer Expectations
+### 2.8  Maintainer Expectations
 
 - Each contributor acts as the **maintainer** of their changes, upstream and downstream.
 - Vendors must appoint a **point-of-contact (PoC)** to review and triage vendor-specific PRs and issues promptly, which will be incorporated as part of the repository CODEOWNERS file.
