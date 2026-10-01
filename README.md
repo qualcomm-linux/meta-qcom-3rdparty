@@ -46,7 +46,7 @@ relates to `main`.
 
 ## Machine Support
 
-See `conf/machine` for the complete list of supported devices.
+See [conf/machine](conf/machine/README.md) for the complete list of supported devices.
 
 ## Documentation
 
@@ -81,3 +81,27 @@ message requirements before opening a pull request.
 This layer is licensed under the MIT license. Check out [LICENSE](LICENSE)
 for more details. [NOTICE](NOTICE) holds the notices for the documentation tools
 adapted from other projects.
+
+## Folders
+
+- [.github/](.github/) — Holds [CODEOWNERS](.github/CODEOWNERS), the CI [workflows](.github/workflows/), the [issue templates](.github/ISSUE_TEMPLATE/) and [pull request template](.github/PULL_REQUEST_TEMPLATE/pr_template.md), the Markdown lint rules, and the documentation build helpers.
+- [ci/](ci/README.md) — Holds the kas configuration and the scripts CI runs.
+- [conf/](conf/README.md) — Holds the layer and machine configuration.
+- [docs/](docs/README.md) — Holds the documentation source and explains how to build the site.
+- [dynamic-layers/](dynamic-layers/README.md) — Holds metadata that applies only when another layer is in the build.
+- [recipes-bsp/](recipes-bsp/README.md) — Holds the board firmware recipes and packagegroups.
+- [recipes-kernel/](recipes-kernel/README.md) — Holds the board-specific kernel appends and configuration.
+
+## Files
+
+- [README.md](README.md) — Introduces the layer, its branches, and its contents.
+- [BRANCHES.md](BRANCHES.md) — Describes how each branch is maintained.
+- [CONTRIBUTING.md](CONTRIBUTING.md) — Points to the contribution guidelines.
+- [AGENTS.md](AGENTS.md) — Points automation agents to the agent guide.
+- [CLAUDE.md](CLAUDE.md) — Links to AGENTS.md for agents that read this file name.
+- [CODE_OF_CONDUCT.md](CODE_OF_CONDUCT.md) — States participation standards and how to report conduct concerns.
+- [SECURITY.md](SECURITY.md) — Gives the private route for reporting vulnerabilities.
+- [LICENSE](LICENSE) — Contains the layer's MIT licence.
+- [NOTICE](NOTICE) — Keeps the licence notices of adapted documentation tools.
+- [.env.example](.env.example) — Documents the environment settings for local kas-container builds.
+- [.gitignore](.gitignore) — Keeps local settings, the documentation environment, and generated output out of Git.
