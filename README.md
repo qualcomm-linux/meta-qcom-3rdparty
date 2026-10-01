@@ -33,12 +33,16 @@ revision: HEAD
 
 ## Branches
 
-- **main:** Primary development branch, with focus on upstream support and
-  compatibility with the most recent Yocto Project release.
-- **wrynose:** LTS branch based on the Yocto Project 6.0 release, used by
-  Qualcomm Linux 2.x.
-- **scarthgap:** Qualcomm Linux >= 1.4, aligned with Yocto Project 5.0 (LTS).
-- **kirkstone:** Qualcomm Linux <= 1.3, aligned with Yocto Project 4.0 (LTS).
+| Branch | Purpose | Status | Build from it | Contributions |
+| --- | --- | --- | --- | --- |
+| `main` | Primary development branch, with focus on upstream support and compatibility with the most recent Yocto Project release. | Active development, compatible with Yocto Project 6.1 (blacksail). | Yes, for `rubikpi3` and `radxa-dragon-q6a`. | Yes; see the [contribution guidelines](docs/source/contributing/CONTRIBUTING.md). |
+| `wrynose` | LTS branch based on the Yocto Project 6.0 release, used by Qualcomm Linux 2.x. | Maintained release branch; the Yocto Project supports 6.0 until April 2030 ([releases](https://wiki.yoctoproject.org/wiki/Releases)). | Yes, for `rubikpi3` and `radxa-dragon-q6a`. | Backports of `main` changes, and changes that apply only to `wrynose`; see the [contribution guidelines](docs/source/contributing/CONTRIBUTING.md). |
+| `scarthgap` | Qualcomm Linux >= 1.4, aligned with Yocto Project 5.0 (LTS). | Not documented; the Yocto Project supports 5.0 until April 2028 ([releases](https://wiki.yoctoproject.org/wiki/Releases)); last commit 2025-09-03 ([history](https://github.com/qualcomm-linux/meta-qcom-3rdparty/commits/scarthgap)). | No: it holds only the layer configuration and policy files, with no machines or recipes. | Qualcomm Linux 1.x contributions; see the [contribution guidelines](docs/source/contributing/CONTRIBUTING.md). |
+| `kirkstone` | Qualcomm Linux <= 1.3, aligned with Yocto Project 4.0 (LTS). | Not documented; the Yocto Project lists 4.0 as end of life ([releases](https://wiki.yoctoproject.org/wiki/Releases)); last commit 2025-04-09 ([history](https://github.com/qualcomm-linux/meta-qcom-3rdparty/commits/kirkstone)). | No: it holds only the layer configuration and policy files, with no machines or recipes. | Not documented. [SECURITY.md](SECURITY.md) accepts patches only for current LTS releases and `main`. |
+| `next` | Not documented. | Not documented; last commit 2026-08-20 ([history](https://github.com/qualcomm-linux/meta-qcom-3rdparty/commits/next)). | Not documented. Its tree has machine configurations for `radxa-dragon-q6a`, `uno-q`, and `ventuno-q`. | Not documented. |
+
+[BRANCHES.md](BRANCHES.md) describes how each branch is maintained and how it
+relates to `main`.
 
 ## Machine Support
 
