@@ -1,0 +1,26 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Ryan Baumann <ryan.baumann@devdocs.work>
+Date: Thu, 9 Jul 2026 15:30:00 -0400
+Subject: [PATCH] driver core: seed deferred_probe_timeout from Kconfig
+
+The deferred-probe timeout initializer is hardcoded to 15 rather than seeded
+from CONFIG_DRIVER_DEFERRED_PROBE_TIMEOUT, so the Kconfig value has no effect.
+Restore the mainline behaviour of initialising it from the Kconfig symbol,
+letting a board disable or extend the timeout via kernel config.
+
+Upstream-Status: Pending
+
+Signed-off-by: Ryan Baumann <ryan.baumann@devdocs.work>
+---
+diff --git a/drivers/base/dd.c b/drivers/base/dd.c
+--- a/drivers/base/dd.c
++++ b/drivers/base/dd.c
+@@ -258,7 +258,7 @@
+ DEFINE_SHOW_ATTRIBUTE(deferred_devs);
+ 
+ #ifdef CONFIG_MODULES
+-static int driver_deferred_probe_timeout = 15;
++static int driver_deferred_probe_timeout = CONFIG_DRIVER_DEFERRED_PROBE_TIMEOUT;
+ #else
+ static int driver_deferred_probe_timeout;
+ #endif
