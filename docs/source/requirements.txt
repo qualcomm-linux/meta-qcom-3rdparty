@@ -1,0 +1,10 @@
+# Exact documentation-package versions; independent of implementation language.
+Sphinx==9.1.0
+myst-parser==5.1.0
+# Browser validation used by the shared check target.
+playwright==1.62.0
+# Shell parser and YAML reader for the function-reference coverage check.
+docutils==0.22.4
+tree-sitter==0.26.0
+tree-sitter-bash==0.25.1
+pyyaml==6.0.3

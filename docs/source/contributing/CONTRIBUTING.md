@@ -13,7 +13,7 @@ The `meta-qcom-3rdparty` layer provides a **common OpenEmbedded / Yocto BSP** fo
 
 - **Common layer for non-Qualcomm EVKs:** consolidate enablement for boards not officially maintained by Qualcomm.
 - **Clean BSP implementation:** a shared source of truth that vendors can reuse without divergence.
-- **Extend the Qualcomm Linux ecosystem:** encourage community participation and long-term maintainability aligned with `meta-qcom`.
+- **Extend the Qualcomm Linux ecosystem:** encourage community participation and long-term maintainability aligned with [`meta-qcom`](https://github.com/qualcomm-linux/meta-qcom).
 
 References:
 
@@ -29,6 +29,10 @@ Our process mirrors the official Yocto Project contribution flow — see
 
 ### 2.1  Pull-Request Workflow
 
+Please submit any patches against the `meta-qcom-3rdparty` layer by using
+the GitHub pull-request feature. Fork the repo, create a branch,
+do the work, rebase from upstream, and create the pull request.
+
 - **Fork and propose changes** via GitHub Pull Requests.
   Use **draft mode** for work-in-progress patches.
 - **Create clean commits:** one logical change per commit, with the subject
@@ -37,6 +41,13 @@ Our process mirrors the official Yocto Project contribution flow — see
 - **Validate locally** before submission: build with `bitbake`, flash, and verify runtime.
 - **Address review feedback** and re-push to update your PR.
   Use `git rebase -i` to squash or reorder commits as needed.
+
+[DEVELOPMENT.md](DEVELOPMENT.md) sets up the documentation tools and lists the
+local checks. Open the pull request against `main` with the
+[pull request template](https://github.com/qualcomm-linux/meta-qcom-3rdparty/compare?expand=1&template=pr_template.md).
+Fixes land on `main` first; the agent guide's
+[backporting section](AGENTS.md#8-backporting-to-a-release-branch) describes
+how they reach the `wrynose` release branch.
 
 ### 2.2  Commit Messages
 
@@ -102,8 +113,8 @@ Assisted-by: ExampleAgent:example-model-1.0
 Because this layer expects to host multiple vendor platforms:
 
 - Use **machine overrides** (`:machine` or `:append:machine`) to confine board-specific logic.
-- Avoid cross-contamination between machines or with upstream `meta-qcom`.
-- Do not introduce SoC-generic behavior under a machine-specific path. Such SoC-generic behavior must be sent/upstreamed to `meta-qcom` instead.
+- Avoid cross-contamination between machines or with upstream [`meta-qcom`](https://github.com/qualcomm-linux/meta-qcom).
+- Do not introduce SoC-generic behavior under a machine-specific path. Such SoC-generic behavior must be sent/upstreamed to [`meta-qcom`](https://github.com/qualcomm-linux/meta-qcom) instead.
 
 Reference: [BitBake Overrides](https://docs.yoctoproject.org/ref-manual/variables.html#var-OVERRIDES)
 
@@ -112,11 +123,11 @@ Reference: [BitBake Overrides](https://docs.yoctoproject.org/ref-manual/variable
 All vendor boards live together in a single layer:
 
 - **No branch or folder segregation per vendor.**
-- Maintain quality equivalent to `meta-qcom`.
+- Maintain quality equivalent to [`meta-qcom`](https://github.com/qualcomm-linux/meta-qcom).
 
 ### 2.6  No Recipe Forks
 
-- Forks of recipes from `meta-qcom`, `meta-qcom-hwe`, or base OE / Yocto layers are **not accepted**.
+- Forks of recipes from [`meta-qcom`](https://github.com/qualcomm-linux/meta-qcom), [`meta-qcom-hwe`](https://github.com/qualcomm-linux/meta-qcom-hwe), or base OE / Yocto layers are **not accepted**.
 - Use `.bbappend` files for vendor-specific patching.
 - Keep upstream recipes authoritative.
 
@@ -156,7 +167,7 @@ Preferred test distros:
 - **Partition definitions:**
   Use [`qcom-ptool`](https://github.com/qualcomm-linux/qcom-ptool) to manage partition layouts.
 - **Kernel enablement:**
-  - Align with `linux-yocto-dev` and `linux-qcom-next`.
+  - Align with [`linux-yocto-dev`](https://git.yoctoproject.org/linux-yocto-dev) and `linux-qcom-next`.
   - Patches should be **submitted upstream to the Linux kernel** first.
   - Temporary backports or in-flight patches are acceptable if tracked.
   References:
@@ -165,7 +176,7 @@ Preferred test distros:
 - **Firmware:**
   Custom firmware must be contributed to [`linux-firmware`](https://git.kernel.org/pub/scm/linux/kernel/git/firmware/linux-firmware.git/) whenever possible.
 - **External layer recipes:**
-  Changes targeting `oe-core` or `meta-openembedded` should be sent directly upstream.
+  Changes targeting [`oe-core`](https://github.com/openembedded/openembedded-core) or [`meta-openembedded`](https://github.com/openembedded/meta-openembedded) should be sent directly upstream.
 
 ---
 
@@ -224,7 +235,7 @@ Key elements to include:
   PREFERRED_PROVIDER_virtual/kernel ?= "linux-qcom-next"
   ```
 
-- **SoC include** — pull in the common SoC baseline from `meta-qcom`:
+- **SoC include** — pull in the common SoC baseline from [`meta-qcom`](https://github.com/qualcomm-linux/meta-qcom):
 
   ```bitbake
   require conf/machine/include/qcom-qcs6490.inc
@@ -293,7 +304,7 @@ the firmware without the DSP blobs.
 
 ### 6.3  Kernel
 
-Prefer the `linux-qcom-next` kernel from `meta-qcom`; `rubikpi3` uses it
+Prefer the `linux-qcom-next` kernel from [`meta-qcom`](https://github.com/qualcomm-linux/meta-qcom); `rubikpi3` uses it
 unchanged. Board-specific `Kconfig` fragments or revision pins go into a
 `.bbappend` with machine overrides, never into a copied recipe:
 
@@ -312,14 +323,14 @@ of the upstream `defconfig`.
 
 ### 6.4  Boot Firmware Recipe
 
-Reuse the SoC boot firmware recipe from `meta-qcom` whenever the board is
-covered by it. Only add a recipe here when the board needs binaries `meta-qcom`
+Reuse the SoC boot firmware recipe from [`meta-qcom`](https://github.com/qualcomm-linux/meta-qcom) whenever the board is
+covered by it. Only add a recipe here when the board needs binaries [`meta-qcom`](https://github.com/qualcomm-linux/meta-qcom)
 does not provide, such as a vendor-signed firmware set or the board-specific CDT.
 
 File: `recipes-bsp/firmware-boot/firmware-qcom-boot-rubikpi3_20260915.bb`
 
 Closed-source boot binaries must be hosted on a **public, no-login mirror**
-managed by the vendor (the `rubikpi-ai/boot-assets` git repository in this
+managed by the vendor (the [`rubikpi-ai/boot-assets`](https://github.com/rubikpi-ai/boot-assets) git repository in this
 case) and fetched via `SRC_URI`. Never commit binaries to the repository:
 
 ```bitbake
@@ -342,7 +353,7 @@ them up.
 
 Vendor firmware under a license the distro lists as incompatible needs an
 exception for the images that ship it, confined to the machine and kept under
-`dynamic-layers/qcom-distro/` so it only applies with `meta-qcom-distro`:
+`dynamic-layers/qcom-distro/` so it only applies with [`meta-qcom-distro`](https://github.com/qualcomm-linux/meta-qcom-distro):
 
 ```bitbake
 # dynamic-layers/qcom-distro/recipes-products/images/qcom-multimedia-image.bbappend
@@ -385,7 +396,7 @@ When adding a new board, ensure the following files are present:
 | --- | --- |
 | `conf/machine/<machine>.conf` | Machine definition |
 | `recipes-bsp/packagegroups/packagegroup-<machine>.bb` | Firmware (and DSP) packagegroup |
-| `recipes-bsp/firmware-boot/firmware-qcom-boot-<machine>_<ver>.bb` | Board firmware recipe, when not already covered by `meta-qcom` |
+| `recipes-bsp/firmware-boot/firmware-qcom-boot-<machine>_<ver>.bb` | Board firmware recipe, when not already covered by [`meta-qcom`](https://github.com/qualcomm-linux/meta-qcom) |
 | `recipes-kernel/linux/linux-qcom-next_git.bbappend` (or `linux-<vendor>_<ver>.bb`) | Kernel fragments / revision override, or dedicated kernel recipe |
 | `ci/<machine>.yml` | KAS machine fragment |
 | Entry in `.github/workflows/build-yocto.yml` matrix | CI build registration |

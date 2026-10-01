@@ -1,0 +1,14 @@
+# Ignore local environment settings at any folder depth.
+.env
+# Ignore named environment files, such as .env.local.
+.env.*
+# Keep the documented, safe settings file in version control.
+!.env.example
+
+# Local documentation environment, build caches, and generated output: the site
+# is built locally with make -f docs/source/Makefile setup html.
+.venv/
+docs/.doctrees/
+docs/site/
+docs/source/contributing/.generated/
+__pycache__/
