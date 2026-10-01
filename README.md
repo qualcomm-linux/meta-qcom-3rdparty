@@ -105,3 +105,42 @@ adapted from other projects.
 - [NOTICE](NOTICE) — Keeps the licence notices of adapted documentation tools.
 - [.env.example](.env.example) — Documents the environment settings for local kas-container builds.
 - [.gitignore](.gitignore) — Keeps local settings, the documentation environment, and generated output out of Git.
+
+<!-- repository-map:start -->
+
+## Repository map
+
+```mermaid
+flowchart LR
+    r0["meta-qcom-3rdparty (you are here)"]
+    click r0 href "https://github.com/qualcomm-linux/meta-qcom-3rdparty" _blank
+    r1["kernel"]
+    click r1 href "https://github.com/qualcomm-linux/kernel" _blank
+    r2["meta-ai"]
+    click r2 href "https://github.com/qualcomm-linux/meta-ai" _blank
+    r3["meta-qcom"]
+    click r3 href "https://github.com/qualcomm-linux/meta-qcom" _blank
+    r4["meta-qcom-distro"]
+    click r4 href "https://github.com/qualcomm-linux/meta-qcom-distro" _blank
+    r5["meta-qcom-hwe"]
+    click r5 href "https://github.com/qualcomm-linux/meta-qcom-hwe" _blank
+    r6["qcom-ptool"]
+    click r6 href "https://github.com/qualcomm-linux/qcom-ptool" _blank
+    r7["fastrpc"]
+    click r7 href "https://github.com/qualcomm/fastrpc" _blank
+    r0 -->|"adds third-party board support to"| r3
+    r0 -->|"builds on (scarthgap)"| r5
+    r0 -->|"can use Qualcomm Linux settings from"| r4
+    r3 -->|"gets partition tools from"| r6
+    r3 -->|"fetches Linux kernel sources from"| r1
+    r3 -->|"adds recipes when combined with"| r2
+    r3 -->|"adds recipes when combined with"| r4
+    r3 -->|"fetches sources from"| r7
+    style r0 fill:#e6f3ff,stroke:#0969da,stroke-width:3px,color:#182c43
+```
+
+[Full Qualcomm repository map](https://github.com/devdocsorg/qualcomm-repository-map).
+
+<!-- Generated from https://github.com/devdocsorg/qualcomm-repository-map at ea769a8df1c7cdc9abdecdbc142ef0731023c748; dataset SHA-256: 89d115013900f5bb4764c76f3bebe5210532d8167c721fbc280043351dda086a. -->
+
+<!-- repository-map:end -->
