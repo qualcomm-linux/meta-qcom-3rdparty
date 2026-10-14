@@ -22,7 +22,7 @@ The `meta-qcom-3rdparty` layer provides:
 - [Contribution Guidelines](source/contributing/CONTRIBUTING.md) — how to contribute patches, follow Yocto conventions, and structure vendor-specific code.
 - [Usage Guide](source/user/USAGE.md) — how to build an image for a supported board and find the result.
 - [Configuration Reference](source/user/CONFIGURATION.md) — what each of the layer's settings does, with safe example values.
-- [Supported Machines](supported-machines.md) — list of currently supported platforms, vendors, and hardware status (TODO).
+- [Supported Machines](../conf/machine/README.md) — list of currently supported platforms and their machine configurations.
 - [Developer Notes](developer.md) — additional details for maintainers, CI integration, and testing recommendations (TODO).
 
 ---
