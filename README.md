@@ -106,3 +106,42 @@ and templates adapted from other projects.
 - [NOTICE](NOTICE) — Contains the licences of material adapted from other projects.
 - [README.md](README.md) — Introduces the layer, its branches, and its contents.
 - [SECURITY.md](SECURITY.md) — Explains how to report vulnerabilities and which branches receive security fixes.
+
+<!-- repository-map:start -->
+
+## Repository map
+
+```mermaid
+flowchart LR
+    r0["meta-qcom-3rdparty (you are here)"]
+    click r0 href "https://github.com/qualcomm-linux/meta-qcom-3rdparty" _blank
+    r1["kernel"]
+    click r1 href "https://github.com/qualcomm-linux/kernel" _blank
+    r2["meta-ai"]
+    click r2 href "https://github.com/qualcomm-linux/meta-ai" _blank
+    r3["meta-qcom"]
+    click r3 href "https://github.com/qualcomm-linux/meta-qcom" _blank
+    r4["meta-qcom-distro"]
+    click r4 href "https://github.com/qualcomm-linux/meta-qcom-distro" _blank
+    r5["meta-qcom-hwe"]
+    click r5 href "https://github.com/qualcomm-linux/meta-qcom-hwe" _blank
+    r6["qcom-ptool"]
+    click r6 href "https://github.com/qualcomm-linux/qcom-ptool" _blank
+    r7["fastrpc"]
+    click r7 href "https://github.com/qualcomm/fastrpc" _blank
+    r0 -->|"adds third-party board support to"| r3
+    r0 -->|"builds on (scarthgap)"| r5
+    r0 -->|"can use Qualcomm Linux settings from"| r4
+    r3 -->|"gets partition tools from"| r6
+    r3 -->|"fetches Linux kernel sources from"| r1
+    r3 -->|"adds recipes when combined with"| r2
+    r3 -->|"adds recipes when combined with"| r4
+    r3 -->|"fetches sources from"| r7
+    style r0 fill:#e6f3ff,stroke:#0969da,stroke-width:3px,color:#182c43
+```
+
+[Full Qualcomm repository map](https://github.com/devdocsorg/qualcomm-repository-map).
+
+<!-- Generated from https://github.com/devdocsorg/qualcomm-repository-map at 2d4a2fb5ee1e6d6e75f85c3ba1352b80a173b7eb; dataset SHA-256: 8e92870c8f246f499f7a96cd90969886d317f45fb8a76c553db35e306a044275. -->
+
+<!-- repository-map:end -->
