@@ -43,13 +43,11 @@ See `conf/machine` for the complete list of supported devices.
 
 ## Contributing
 
-Please submit any patches against the `meta-qcom-3rdparty` layer by using
-the GitHub pull-request feature. Fork the repo, create a branch,
-do the work, rebase from upstream, and create the pull request.
-
-Please read [docs/contributing.md](docs/contributing.md) for the contribution
+Please read the [contribution guide](docs/source/contributing/CONTRIBUTING.md),
+which explains how to submit patches, the contribution
 workflow, the layer scope rules and the commit subject and message
-requirements before opening a pull request.
+requirements, before opening a pull request. Follow the
+[Code of Conduct](CODE_OF_CONDUCT.md) when participating.
 
 ## Communication
 
