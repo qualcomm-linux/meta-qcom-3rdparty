@@ -45,6 +45,21 @@ To build an image for a supported board, follow the
 
 See [`conf/machine`](conf/machine/README.md) for the complete list of supported devices.
 
+## Documentation
+
+The [documentation guide](docs/README.md) indexes the
+[usage tutorial](docs/source/user/USAGE.md), the
+[configuration reference](docs/source/user/CONFIGURATION.md), the
+[development setup](docs/source/contributing/DEVELOPMENT.md), and the
+[function reference](docs/source/contributing/README.md#function-reference).
+Build the documentation site from the repository root, after installing the
+[prerequisites](docs/source/contributing/DEVELOPMENT.md#prerequisites), then open
+`docs/site/index.html` directly in a browser:
+
+```sh
+make -f docs/source/Makefile setup html
+```
+
 ## Contributing
 
 Please read the [contribution guide](docs/source/contributing/CONTRIBUTING.md),
@@ -66,12 +81,12 @@ requirements, before opening a pull request. Follow the
 ## License
 
 This layer is licensed under the MIT license. Check out [LICENSE](LICENSE)
-for more details. [NOTICE](NOTICE) holds the licences of the templates adapted
-from other projects.
+for more details. [NOTICE](NOTICE) holds the licences of the documentation tools
+and templates adapted from other projects.
 
 ## Folders
 
-- [.github/](.github/) — Holds the CI [workflows](.github/workflows/), [CODEOWNERS](.github/CODEOWNERS), the [issue templates](.github/ISSUE_TEMPLATE/), the [pull request template](.github/PULL_REQUEST_TEMPLATE/pr_template.md), and the Markdown lint rules.
+- [.github/](.github/) — Holds the CI [workflows](.github/workflows/), [CODEOWNERS](.github/CODEOWNERS), the [issue templates](.github/ISSUE_TEMPLATE/), the [pull request template](.github/PULL_REQUEST_TEMPLATE/pr_template.md), the Markdown lint rules, and the documentation build scripts.
 - [ci/](ci/README.md) — Holds the [kas](https://github.com/siemens/kas) fragments and scripts that CI builds and checks the layer with.
 - [conf/](conf/README.md) — Registers the layer and defines its machines.
 - [docs/](docs/README.md) — Holds the documentation source and explains how to build the site.
@@ -82,6 +97,7 @@ from other projects.
 ## Files
 
 - [.env.example](.env.example) — Documents the environment settings for kas builds and the command that loads them.
+- [.gitignore](.gitignore) — Keeps local environment files and the generated documentation out of Git.
 - [AGENTS.md](AGENTS.md) — Points automation agents to the agent guide.
 - [CLAUDE.md](CLAUDE.md) — Links to `AGENTS.md` for agents that read this name.
 - [CODE_OF_CONDUCT.md](CODE_OF_CONDUCT.md) — States the expected behaviour and how to report conduct concerns.

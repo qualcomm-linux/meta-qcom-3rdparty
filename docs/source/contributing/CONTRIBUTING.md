@@ -35,7 +35,8 @@ do the work, rebase from upstream, and create the pull request.
 The README's [branch table](../../../README.md#branches) names the branch that
 takes each kind of contribution;
 [open the pull request with the template](https://github.com/qualcomm-linux/meta-qcom-3rdparty/compare?expand=1&template=pr_template.md)
-against that branch.
+against that branch. The [development setup](DEVELOPMENT.md) installs the
+documentation tools and runs their checks.
 
 - **Fork and propose changes** via GitHub Pull Requests.
   Use **draft mode** for work-in-progress patches.

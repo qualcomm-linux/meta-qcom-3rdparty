@@ -23,7 +23,7 @@ The `meta-qcom-3rdparty` layer provides:
 - [Usage Guide](source/user/USAGE.md) — how to build an image for a supported board and find the result.
 - [Configuration Reference](source/user/CONFIGURATION.md) — what each of the layer's settings does, with safe example values.
 - [Supported Machines](../conf/machine/README.md) — list of currently supported platforms and their machine configurations.
-- [Developer Notes](developer.md) — additional details for maintainers, CI integration, and testing recommendations (TODO).
+- [Developer Notes](source/contributing/DEVELOPMENT.md) — development environment, documentation build, and local checks.
 
 ---
 
@@ -51,6 +51,30 @@ bitbake-layers add-layer ../meta-qcom-3rdparty
 - [meta-qcom-distro](https://github.com/qualcomm-linux/meta-qcom-distro)
 - [OpenEmbedded Layer Index](https://layers.openembedded.org/layerindex/)
 - [Yocto Project Documentation](https://docs.yoctoproject.org/)
+
+## Build this documentation
+
+After installing the [prerequisites](source/contributing/DEVELOPMENT.md#prerequisites),
+build the site from the repository root, then open `docs/site/index.html` directly
+in a browser; no HTTP server is needed:
+
+```sh
+make -f docs/source/Makefile setup html
+```
+
+The site is generated and not committed. It is built from the repository's README
+files and the guides in [source](source/README.md). The build writes
+`docs/site/THIRD_PARTY_LICENSES.txt`, which keeps the licences of the bundled
+documentation assets. The build attaches the upstream notices to redistributed
+JavaScript without changing its behaviour.
+
+## Folders
+
+- [source/](source/README.md) — Contains the authoritative guides and the documentation build configuration.
+
+## Files
+
+- [README.md](README.md) — Introduces the layer's documentation and explains how to build the site.
 
 ---
 
