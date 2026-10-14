@@ -1,0 +1,95 @@
+# Handle NON-HLOS.bin unpacking in a generic way
+# Include the file to be able to dissect the image using handle_nonhlos_image()
+# If NHLOS_URI is defined, the image will be dissected automatically
+#
+# The including recipe must define install_license(), which installs the
+# licence file(s) for the NHLOS binaries into ${D}${datadir}/${BPN}.
+#
+# Additionally PROPRIETARY_URI can be specified. Its contents will be used to
+# provide additional firmware files (like Adreno or IPA), which are not a part
+# of NON-HLOS.bin.
+
+NHLOS_URI ??= ""
+PROPRIETARY_URI ??= ""
+
+# List all firmware files to be installed
+FW_QCOM_LIST ??= ""
+
+DEPENDS += "pil-squasher-native mtools-native"
+
+# Conditionally populate SRC_URI. We have to do it here rather than in python
+# script to let base.bbclass to pick up dependencies
+SRC_URI += "${NHLOS_URI} ${PROPRIETARY_URI}${@ ';subdir=proprietary' if d.getVar('PROPRIETARY_URI') != '' else '' }"
+
+S = "${UNPACKDIR}"
+
+FILES:${PN}-license = "${datadir}/${BPN}"
+
+python() {
+    d.appendVar('PACKAGE_BEFORE_PN', ' ${PN}-license')
+
+    for pkg in d.getVar("SPLIT_FIRMWARE_PACKAGES").split():
+        # Depend on the license package to get the license file
+        d.appendVar("RDEPENDS:" + pkg, " ${PN}-license")
+}
+
+unpack_nhlos_image() {
+    mkdir -p ${B}/firmware
+    mcopy -n -s -i "$1" ::/* ${B}/firmware/
+}
+
+handle_nonhlos_image() {
+    for fw in ${B}/firmware/image/*.mdt ; do
+        pil-squasher ${B}/`basename $fw mdt`mbn $fw || exit 1
+    done
+}
+
+# If the URL is the file:// URI, the whole local path will be duplicated in the UNPACKDIR.
+# Otherwise we just need the last (filename) part of the path.
+def get_nhlos_path(path):
+    from urllib.parse import urlparse
+    if path == "":
+        return ""
+    url = urlparse(path)
+    if url.scheme == "file":
+        return url.path
+    return url.path.rsplit('/', 1)[1]
+
+do_compile:prepend() {
+    if [ -z "${NHLOS_URI}" ] ; then
+        bbwarn "${PN}: not packaging NHLOS firmware. Please provide NHLOS_URI"
+    else
+        unpack_nhlos_image ${UNPACKDIR}/${@get_nhlos_path(d.getVar("NHLOS_URI"))}
+        handle_nonhlos_image
+    fi
+}
+
+do_install:prepend() {
+    if [ -n "${NHLOS_URI}${PROPRIETARY_URI}" ] ; then
+        install -d ${D}${datadir}/${BPN}
+        install_license
+
+        install -d ${D}${FW_QCOM_PATH}
+
+        for fw in ${FW_QCOM_LIST} ; do
+            if [ -r ${S}/proprietary/$fw ] ; then
+                install -m 0644 ${S}/proprietary/$fw ${D}${FW_QCOM_PATH}
+            elif [ -r ${B}/$fw ] ; then
+                install -m 0644 ${B}/$fw ${D}${FW_QCOM_PATH}
+            elif [ -r ${B}/firmware/image/$fw ] ; then
+                if [ -d ${B}/firmware/image/$fw ] ; then
+                    find ${B}/firmware/image/$fw -type f | while read f ; do
+                        relpath="${f#${B}/firmware/image/}"
+                        install -Dm 0644 "$f" ${D}${FW_QCOM_PATH}/"$relpath"
+                    done
+                else
+                    install -m 0644 ${B}/firmware/image/$fw ${D}${FW_QCOM_PATH}
+                fi
+            fi
+        done
+    fi
+}
+
+# Make sure that there is nothing in the meta-package, all firmware must go to
+# a particular package.
+FILES:${PN} = ""
