@@ -28,6 +28,9 @@ branch: master
 revision: HEAD
 ```
 
+To build an image for a supported board, follow the
+[usage tutorial](docs/source/user/USAGE.md).
+
 ## Branches
 
 - **main:** Primary development branch, with focus on upstream support and
