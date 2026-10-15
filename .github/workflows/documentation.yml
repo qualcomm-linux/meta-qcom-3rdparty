@@ -1,0 +1,28 @@
+name: Documentation
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  documentation:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+        with:
+          persist-credentials: false
+      - uses: astral-sh/setup-uv@d0d8abe699bfb85fec6de9f7adb5ae17292296ff # v6
+        with:
+          version: '0.12.3'
+      - name: Install GNU Awk, which runs shdoc
+        run: sudo apt-get update && sudo apt-get install -y gawk
+      - name: Install pinned documentation tools
+        run: make -f docs/source/Makefile setup
+      - name: Install the browser and its CI dependencies
+        run: .venv/bin/playwright install --with-deps chromium
+      - name: Build the site and check reference coverage and offline browsing
+        run: make -f docs/source/Makefile check
