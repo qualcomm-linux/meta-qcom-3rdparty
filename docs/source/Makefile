@@ -29,13 +29,13 @@ setup:
 	uv venv --python 3.12 --clear .venv
 	uv pip install --python .venv/bin/python -r docs/source/requirements.lock
 	curl -sSfL -o .venv/bin/shdoc https://raw.githubusercontent.com/reconquest/shdoc/$(SHDOC_REVISION)/shdoc
-	echo "$(SHDOC_SHA256)  .venv/bin/shdoc" | sha256sum -c --quiet
+	echo "$(SHDOC_SHA256)  .venv/bin/shdoc" | sha256sum -c --quiet -
 	git init -q .venv/bitbake
 	git -C .venv/bitbake fetch -q --depth 1 $(BITBAKE_URL) $(BITBAKE_REVISION)
 	git -C .venv/bitbake -c advice.detachedHead=false checkout -q FETCH_HEAD
 	mkdir -p .venv/mermaid
 	curl -sSfL -o .venv/mermaid/mermaid.min.js $(MERMAID_URL)
-	echo "$(MERMAID_SHA256)  .venv/mermaid/mermaid.min.js" | sha256sum -c --quiet
+	echo "$(MERMAID_SHA256)  .venv/mermaid/mermaid.min.js" | sha256sum -c --quiet -
 	command -v chromium >/dev/null || .venv/bin/playwright install chromium
 
 html:
