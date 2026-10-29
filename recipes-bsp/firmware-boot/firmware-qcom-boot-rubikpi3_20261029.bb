@@ -5,8 +5,8 @@ payloads from rubikpi-ai/boot-assets."
 LICENSE = "LicenseRef-LICENSE.qcom-2"
 LIC_FILES_CHKSUM = "file://LICENSE.txt;md5=165287851294f2fb8ac8cbc5e24b02b0"
 
-SRC_URI = "git://github.com/rubikpi-ai/boot-assets;protocol=https;branch=qli2.0;destsuffix=${BP}"
-SRCREV = "eaf0c648cb792c50606d23b97b83117bb536f051"
+SRC_URI = "git://github.com/rubikpi-ai/boot-assets;protocol=https;branch=qli2.1.1;destsuffix=${BP}"
+SRCREV = "00f80b80862d4883a6223fca01ab3e8502bc8e31"
 
 INHIBIT_DEFAULT_DEPS = "1"
 do_configure[noexec] = "1"
