@@ -20,7 +20,9 @@ SRC_URI += "${DSPSO_URI}"
 # Extract package name part
 DSP_PKG_NAME ?= "${@d.getVar("PN").split("hexagon-dspso-")[-1]}"
 
-DSP_QCOM_BASE_PATH = "${datadir}/qcom"
+inherit hexagon-dsp
+
+DSP_QCOM_BASE_PATH = "${HEXAGON_DSP_DIR}"
 DSP_QCOM_CONF_D_PATH = "${DSP_QCOM_BASE_PATH}/conf.d"
 DSP_QCOM_SUBPATH = "${DSPSO_SOC}/${DSPSO_VENDOR}/${DSPSO_DEVICE}"
 DSP_QCOM_PATH = "${DSP_QCOM_BASE_PATH}/${DSP_QCOM_SUBPATH}"
