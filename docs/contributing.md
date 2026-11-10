@@ -230,11 +230,13 @@ Key elements to include:
   require conf/machine/include/qcom-qcs6490.inc
   ```
 
-- **Machine features** — extend the SoC defaults with the board's hardware
-  capabilities:
+- **Machine features** — append only the board's own hardware capabilities.
+  `meta-qcom` already sets the common ones, including `efi` and `pci` where
+  the SoC supports them, so never overwrite the list with `=`. For example,
+  on a board with a TPM:
 
   ```bitbake
-  MACHINE_FEATURES += "efi pci"
+  MACHINE_FEATURES += "tpm2"
   ```
 
 - **Device tree** — declare the DTB name(s) used at build and boot time:
