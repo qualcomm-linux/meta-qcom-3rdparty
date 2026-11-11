@@ -162,6 +162,7 @@ jobs:
         machine:
           - radxa-dragon-q6a
           - rubikpi3
+          - iq-x7181-som-db5830
         distro:
           - name: nodistro
             yamlfile: ""
