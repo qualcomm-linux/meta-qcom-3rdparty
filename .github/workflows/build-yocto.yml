@@ -25,6 +25,10 @@ concurrency:
 env:
   CACHE_DIR: /efsx/qli/meta-qcom
   KAS_CLONE_DEPTH: 1
+  KAS_CONTAINER: ${{ github.workspace }}/ci/kas-container
+  # Same image as the compile jobs of meta-qcom, so the lock and the checks
+  # run with the kas that builds
+  KAS_CONTAINER_IMAGE: ghcr.io/siemens/kas/kas@sha256:3f3d3257e8d4ca3adfcb2e0025e6da24339fb8d68a6999ca36c37381351582d5 # 5.5-9-g0555188
 
 jobs:
   kas-setup:
@@ -35,13 +39,13 @@ jobs:
         with:
           persist-credentials: false
 
-      - name: Setting up kas-container
+      - name: Check kas-container version
         run: |
-          KAS_CONTAINER=$GITHUB_WORKSPACE/kas-container
-          echo "KAS_CONTAINER=$KAS_CONTAINER" >> $GITHUB_ENV
           LATEST=$(git ls-remote --tags --refs --sort="v:refname" https://github.com/siemens/kas | tail -n1 | sed 's/.*\///')
-          wget -qO ${KAS_CONTAINER} https://raw.githubusercontent.com/siemens/kas/refs/tags/$LATEST/kas-container
-          chmod +x ${KAS_CONTAINER}
+          CURRENT=$(${KAS_CONTAINER} --version | cut -d' ' -f 2)
+          if [[ "${CURRENT}" != "${LATEST}" ]]; then
+            echo "Version "${LATEST}" of kas is available and we are at "${CURRENT}", please update "KAS_CONTAINER_IMAGE: $KAS_CONTAINER_IMAGE""
+          fi
 
       - name: Run kas lock
         run: |
@@ -54,7 +58,6 @@ jobs:
           if-no-files-found: error
           path: |
             ci/*.lock.yml
-            kas-container
 
   github-cache-check:
     needs: kas-setup
@@ -72,6 +75,7 @@ jobs:
         uses: actions/download-artifact@v7
         with:
           name: kas
+          path: ci
 
       - name: Compute build input hash
         id: hash
@@ -125,12 +129,7 @@ jobs:
         uses: actions/download-artifact@v7
         with:
           name: kas
-
-      - name: Setting up kas-container
-        run: |
-          KAS_CONTAINER=$GITHUB_WORKSPACE/kas-container
-          echo "KAS_CONTAINER=$KAS_CONTAINER" >> $GITHUB_ENV
-          chmod +x $KAS_CONTAINER
+          path: ci
 
       - name: Run Yocto patchreview
         run: |
